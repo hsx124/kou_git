@@ -1,0 +1,38 @@
+var text_follow_list = {
+    'TOOLTIP_MEDIA_001':{
+        'title':'優先順位について',
+        'body':'検索画面、検索結果画面の類似検索エリアに表示する掲載媒体の表示順を制御することができます。<br><br>数字が大きい掲載媒体ほど上位に表示されます。',
+        'width':400,
+        'position':'left'
+    },
+    'TOOLTIP_IPBIND_001':{
+        'title':'IP名検索について',
+        'body':'IP名またはIPかな名で検索してください。',
+        'width':400,
+        'position':'left'
+    },
+    'TOOLTIP_IPBIND_002':{
+        'title':'関連作品追加について',
+        'body':'作品名または作品かな名で検索してください。',
+        'width':400,
+        'position':'left'
+    },
+    'TOOLTIP_IPBIND_003':{
+        'title':'作品名検索について',
+        'body':'作品名または作品かな名で検索してください。',
+        'width':400,
+        'position':'left'
+    },
+    'TOOLTIP_IPBIND_004':{
+        'title':'関連IP追加について',
+        'body':'IP名またはIPかな名で検索してください。',
+        'width':400,
+        'position':'left'
+    },
+    'TOOLTIP_SAKUHINBIND_001':{
+        'title':'関連タイトル名について',
+        'body':'作品の関連タイトル名で検索してください。<br><br>例1）マンガタイトル名：進撃の巨人 Before the fall<br>例2）小説タイトル名：進撃転生したらスライムだった件(原作小説）<br>例3）アニメタイトル名：進撃の巨人　第1期<br>例4）アプリタイトル名：進撃の巨人 TACTICS<br>例5）白書名：2019【NE調査】【ワンピ】【ADK】受容性調査',
+        'width':475,
+        'position':'left'
+    },
+}
