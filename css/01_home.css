@@ -1,0 +1,377 @@
+@charset "UTF-8";
+
+.blue {
+  font-size: 13px;
+  display: inline-block;
+  width: 100px;
+  height: 17px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: rgb(0, 119, 255);
+  border-radius: 7px;
+  transition: 0.4s;
+  margin-right: 40px;
+  margin-left: 40px;
+}
+
+.orange {
+  font-size: 13px;
+  display: inline-block;
+  width: 100px;
+  height: 17px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: orange;
+  border-radius: 7px;
+  transition: 0.4s;
+  margin-right: 40px;
+  margin-left: 40px;
+}
+
+.green {
+  font-size: 13px;
+  display: inline-block;
+  width: 100px;
+  height: 17px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: rgb(32, 178, 134);
+  border-radius: 7px;
+  transition: 0.4s;
+  margin-right: 40px;
+  margin-left: 40px;
+}
+
+.date {
+  padding-left: 20px;
+}
+
+.panel {
+  display: inline-block;
+  width: 32%;
+  margin-right: 1%;
+}
+
+.news-area {
+  color: gray;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.news-header {
+  display: inline-block;
+  border-bottom: 2px solid gray;
+  width: 100%;
+}
+
+.news-area-title {
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px;
+  line-height: 20px;
+}
+
+.filter {
+  float: right;
+}
+
+.filter-item {
+  display: inline-block;
+  margin: 4px;
+  padding-left: 10px;
+}
+
+.filter-item:hover {
+  cursor: pointer;
+  color: #f39700;
+}
+
+.filter-item + .filter-item {
+  border-left: 1px solid gray;
+}
+
+.news-table {
+  margin-top: 10px;
+  line-height: 25px;
+  height: 190px;
+  display: block;
+  overflow: hidden;
+  overflow-y: none;
+}
+
+.news-table:hover {
+  overflow-y: scroll;
+}
+
+.rank-center,
+.rank-center1,
+.rank-center2,
+.rank-center3 {
+  font-size: 18px;
+  text-align: center;
+}
+
+.detail-link {
+  margin: 3px;
+}
+
+#id_button_all {
+  color: #f39700;
+}
+
+/* 共通スタイル上書き(.button-blue) */
+.button-blue {
+  width: 40px;
+  height: 40px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+/* キービジュアルエリア */
+.key-visual-list-area {
+  height: auto;
+}
+
+.key-visual-group {
+  display: inline-block;
+  width: 11%;
+  margin: 0px 10px 0px 10px;
+  vertical-align: top;
+  position: relative;
+}
+.key-visual-img-area {
+  height: 270px;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.key-visual-list-item{
+  max-height:100%;
+  max-width:100%;
+  width:100%;
+  height:auto;
+}
+.key-visual-tag-area {
+  text-align: left;
+  letter-spacing: -0.4em;
+  display: block;
+  width: 100%;
+  padding-top: 4px;
+}
+.key-visual-tag-area * {
+  letter-spacing: normal;
+}
+
+.caption {
+  font-size: 130%;
+  color: #fff;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  position: relative;
+}
+
+.mask {
+  display: block;
+  position: absolute;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-transition: all 0.6s ease;
+  transition: all 0.6s ease;
+  left:0px;
+  z-index: 100;
+}
+
+.mask:hover {
+  cursor: pointer;
+  opacity: 1; /* マスクを表示する */
+}
+
+.key-visual {
+  display: inline-block;
+  width: 100%;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* 白書エリア */
+.link-area {
+  display: inline-block;
+  height: 550px;
+  box-sizing: border-box;
+  letter-spacing: -0.4em;
+}
+
+.link-area * {
+  letter-spacing: normal;
+  vertical-align: top;
+}
+
+.link-left {
+  height: 100%;
+  width: 40%;
+  box-sizing: border-box;
+  text-align: center;
+}
+.link-rihgtarea-left {
+  width: 30%;
+}
+
+.link-left img {
+  padding: 20px 0px 20px 20px;
+  max-width: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
+}
+
+.link-right {
+  height: calc(100% - 1.4em);
+  width: 60%;
+  box-sizing: border-box;
+  padding: 1.4em;
+  word-break: break-all;
+  overflow: hidden;
+  margin-bottom: 1.4em;
+  font-size: 20px;
+}
+.link-rihgtarea-right {
+  width: 70%;
+}
+
+.link-item {
+  box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.2);
+  letter-spacing: -0.4em;
+  box-sizing: border-box;
+}
+
+.link-item:hover,
+.media-notification:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+  transition: transform 0.2s linear;
+  outline: 3px solid red;
+}
+
+.link-item > div {
+  display: inline-block;
+  word-break: break-all;
+}
+
+.link-area > div:first-child {
+  letter-spacing: -0.4em;
+  display: inline-block;
+  width: calc(60% - 10px);
+  height: 100%;
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+
+.link-area > div:last-child {
+  letter-spacing: -0.4em;
+  display: inline-block;
+  width: 40%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.link-area > div:last-child > .link-item:first-child {
+  height: calc(50% - 5px);
+  margin-bottom: 10px;
+}
+
+.link-area > div:last-child > .link-item:last-child {
+  height: calc(50% - 5px);
+  margin-top: 10px;
+}
+
+/* media部からのお知らせ */
+.media-notification {
+  display: inline-block;
+  box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 1%;
+  word-break: break-all;
+  font-size: 20px;
+  width: 98%;
+  box-sizing: border-box;
+}
+
+/* ランキングエリア */
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.ranking-table:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s linear;
+  cursor: pointer;
+  outline: 3px solid red;
+}
+
+.ranking-table tr {
+  height: 200px;
+  border-right: 1px solid red;
+  border-left: 1px solid red;
+  border-bottom: 1px solid red;
+}
+
+.ranking-table:first-child tr {
+  border-top: 1px solid red;
+}
+
+.ranking-table td:nth-child(1) {
+  width: 10%;
+  text-align: center;
+  font-size: 20px;
+  color: red;
+  background-color: #ffffff;
+}
+
+.ranking-table td:nth-child(1) span {
+  display: block;
+}
+
+.ranking-table td:nth-child(2) {
+  width: 30%;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.ranking-table td:nth-child(3) {
+  width: 60%;
+  border-left: 1px solid red;
+}
+
+.ranking-table img {
+  height: 200px;
+}
+
+.ranking-value-table tr {
+  height: 100px;
+  border-left: 1px solid red;
+}
+
+.ranking-value-table tr,
+.ranking-value-table td {
+  border: none !important;
+}
+
+.ranking-value-table tr:nth-child(1) td {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.ranking-value-table tr:nth-child(2) td {
+  background-color: #f8cc72 !important;
+  font-weight: bold;
+}

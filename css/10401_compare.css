@@ -1,0 +1,583 @@
+<<<<<<< HEAD:web/web-front/ipdds/ipdds_app/static/ipdds_app/css/04_compare.css
+@charset "UTF-8";
+
+.description-area {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1%;
+}
+
+.graph-center {
+    padding: 20px 2% 2% 19px;
+}
+
+.graph-left {
+    float: left;
+    width: 49%;
+}
+
+.graph-right {
+    float: right;
+    width: 49%;
+}
+
+.twitter-area {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.book-area {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.book-area-left {
+    display: table;
+    width: 100%;
+}
+
+.book-area-left div {
+    display: table-cell;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.book-area-label {
+    background-color: #6d6dec;
+    color: white;
+    width: 10%;
+    text-align: left;
+}
+
+.book-area-value {
+    border: solid 1px #6d6dec;
+    width: 15%;
+    text-align: right;
+}
+
+.game-area {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.app-area {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.graph {
+    height: 400px;
+}
+
+.table-area {
+    display: inline-block;
+    margin: 10px;
+    width: 100%;
+}
+
+/* ipdds-table上書き */
+.ipdds-table tr:first-child {
+    height: 35px;
+}
+
+.ipdds-table td {
+    height: 30px;
+}
+
+.plot-checkbox {
+    transform: scale(2);
+    vertical-align: top;
+}
+
+.replot-button-area {
+    position: relative;
+    top: -30px;
+    text-align: right;
+}
+
+.compare-button {
+    margin-right: 20px !important;
+}
+
+/* 年代別男女比 */
+.gender-ratio-area {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.gender-ratio-detail {
+    display: inline-block;
+    padding: 1% 0px 1% 1%;
+    width: 48%;
+}
+
+.gender-ratio-table {
+    display: inline-block;
+    vertical-align: top;
+    width: 35%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.gender-ratio-graph {
+    display: inline-block;
+    width: 59%;
+    height: 100%;
+}
+
+.jqplot-highlighter-tooltip {
+    border: none;
+    background: white;
+    border: 1px #ed6c00 double;
+    color: #ed6c00;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 12px;
+    z-index: 10;
+}
+
+.twitter-button-area {
+    padding: 4px;
+    width: 30px;
+    height: 30px;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    background: #0180ca;
+    font-size: 20px;
+    text-align: center;
+}
+
+.twitter-hover {
+    color: #0180ca;
+}
+
+.twitter-hover i:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+#twitter-replot-button.button-blue {
+    margin-right: 5px;
+}
+
+#twiter-follower-graph, #book-graph1, #book-graph2, #book-graph3,
+    #book-graph4, #book-graph5, #book-graph6, #game-graph1, #game-graph2,
+    #app-graph-sales1, #app-graph-sales2, #app-graph-sales3,
+    #app-graph-download1, #app-graph-download2, #app-graph-download3 {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+table.jqplot-table-legend {
+    min-width: 80px;
+    max-width: 280px;
+}
+
+.jqplot-table-legend-swatch-outline {
+    width: 12px;
+}
+
+.mask {
+    display: block;
+    position: absolute;
+    opacity: 1;
+    background-color: rgba(152, 152, 152, 0.4);
+    -webkit-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+    left: 0px;
+    z-index: 100;
+}
+
+.caption {
+    font-size: 130%;
+    color: #222;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    position: relative;
+}
+
+.ui-jqgrid .ui-pg-selbox{
+    padding :0;
+    padding-left : 3px;
+    width:auto;
+    height:auto;
+}
+.ui-jqgrid .ui-pg-input{
+    padding :0;
+    padding-left : 3px;
+    width:auto;
+    height:auto;
+}
+
+.ui-jqgrid .ui-jqgrid-htable th div{
+    height:auto;
+}
+.ui-widget-content .twitter-link i{
+    color: #08c;
+}
+.ui-widget-content .twitter-link i:hover{
+    cursor: pointer;
+}
+
+.shopping-cart-style{
+    font-size: 300px;
+    padding-top: 80px;
+    text-align: center;
+}
+
+.shopping-cart-text-title{
+    font-size: 30px;
+    margin-top: 40px;
+    font-family: Meiryo;
+    color: #0277B9;
+    text-align: left;
+    margin-left: 38%;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.shopping-cart-text{
+    font-size: 20px;
+    padding-top: 15px;
+    font-family: Meiryo;
+    color: #0277B9;
+    text-align: left;
+    margin-left: 41%;
+}
+
+.shopping-cart-icon{
+    position: relative;
+}
+
+.shopping-cart-color{
+    color:#f39700;
+}
+
+.shopping-cart-button {
+    padding: 4px;
+    width: 170px;
+    height: 40px;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    background: #0180ca;
+    font-size: 20px;
+}
+
+.shopping-cart-button:hover {
+    opacity: 0.7;
+}
+
+.shopping-link{
+    color: white;
+}
+
+.shopping-link:hover{
+    opacity: 0.7;
+    text-decoration: none;
+    color: white;
+}
+
+.shooping-button-div{
+    margin-left: 58px;
+    margin-top: 15px;
+=======
+@charset "UTF-8";
+
+.description-area {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1%;
+}
+
+.graph-center {
+    padding: 20px 2% 2% 19px;
+}
+
+.graph-left {
+    float: left;
+    width: 49%;
+}
+
+.graph-right {
+    float: right;
+    width: 49%;
+}
+
+.twitter-area {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.manga-area {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.manga-area-left {
+    display: table;
+    width: 100%;
+}
+
+.manga-area-left div {
+    display: table-cell;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.manga-area-label {
+    background-color: #6d6dec;
+    color: white;
+    width: 10%;
+    text-align: left;
+}
+
+.manga-area-value {
+    border: solid 1px #6d6dec;
+    width: 15%;
+    text-align: right;
+}
+
+.game-area {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.app-area {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.graph {
+    height: 580px;
+}
+
+.table-area {
+    display: inline-block;
+    margin: 10px;
+    width: 100%;
+}
+
+/* ipdds-table上書き */
+.ipdds-table tr:first-child {
+    height: 35px;
+}
+
+.ipdds-table td {
+    height: 30px;
+}
+
+.plot-checkbox {
+    transform: scale(2);
+    vertical-align: top;
+}
+
+.replot-button-area {
+    position: relative;
+    top: -30px;
+    text-align: right;
+}
+
+.compare-button {
+    margin-right: 20px !important;
+}
+
+/* 年代別男女比 */
+.gender-ratio-area {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.gender-ratio-detail {
+    display: inline-block;
+    padding: 1% 0px 1% 1%;
+    width: 48%;
+}
+
+.gender-ratio-table {
+    display: inline-block;
+    vertical-align: top;
+    width: 35%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.gender-ratio-graph {
+    display: inline-block;
+    width: 59%;
+    height: 100%;
+}
+
+.jqplot-highlighter-tooltip {
+    border: none;
+    background: white;
+    border: 1px #ed6c00 double;
+    color: #ed6c00;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 12px;
+    z-index: 10;
+}
+
+.twitter-button-area {
+    padding: 4px;
+    width: 30px;
+    height: 30px;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    background: #0180ca;
+    font-size: 20px;
+    text-align: center;
+}
+
+.twitter-hover {
+    color: #0180ca;
+}
+
+.twitter-hover i:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+#twitter-replot-button.button-blue {
+    margin-right: 5px;
+}
+
+#twiter-follower-graph, #manga-graph1, #manga-graph2, #manga-graph3,
+    #manga-graph4, #manga-graph5, #manga-graph6, #game-graph1, #game-graph2,
+    #app-graph-sales1, #app-graph-sales2, #app-graph-sales3,
+    #app-graph-download1, #app-graph-download2, #app-graph-download3 {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+/* table.jqplot-table-legend {
+    min-width: 80px;
+    max-width: 280px;
+} */
+.jqplot-table-legend-label {
+    white-space: nowrap;
+}
+
+.jqplot-table-legend-swatch-outline {
+    width: 12px;
+}
+
+.mask {
+    display: block;
+    position: absolute;
+    opacity: 1;
+    background-color: rgba(152, 152, 152, 0.4);
+    -webkit-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+    left: 0px;
+    z-index: 100;
+}
+
+.caption {
+    font-size: 130%;
+    color: #222;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    position: relative;
+}
+
+.ui-jqgrid .ui-pg-selbox{
+    padding :0;
+    padding-left : 3px;
+    width:auto;
+    height:auto;
+}
+.ui-jqgrid .ui-pg-input{
+    padding :0;
+    padding-left : 3px;
+    width:auto;
+    height:auto;
+}
+
+.ui-jqgrid .ui-jqgrid-htable th div{
+    height:auto;
+}
+.ui-widget-content .twitter-link i{
+    color: #08c;
+}
+.ui-widget-content .twitter-link i:hover{
+    cursor: pointer;
+}
+
+.shopping-cart-style{
+    font-size: 300px;
+    padding-top: 80px;
+    text-align: center;
+}
+
+.shopping-cart-text-title{
+    font-size: 30px;
+    margin-top: 40px;
+    font-family: Meiryo;
+    color: #0277B9;
+    text-align: left;
+    margin-left: 38%;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.shopping-cart-text{
+    font-size: 20px;
+    padding-top: 15px;
+    font-family: Meiryo;
+    color: #0277B9;
+    text-align: left;
+    margin-left: 41%;
+}
+
+.shopping-cart-icon{
+    position: relative;
+}
+
+.shopping-cart-color{
+    color:#f39700;
+}
+
+.shopping-cart-button {
+    padding: 4px;
+    width: 170px;
+    height: 40px;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    background: #0180ca;
+    font-size: 20px;
+}
+.shopping-cart-button:hover {
+    opacity: 0.7;
+}
+.shopping-link{
+    color: white;
+}
+
+.shopping-link:hover{
+    opacity: 0.7;
+    text-decoration: none;
+    color: white;
+}
+
+.shooping-button-div{
+    margin-left: 58px;
+    margin-top: 15px;
+>>>>>>> remotes/origin/feature/ph1.3:web/web-front/ipdds/ipdds_app/static/ipdds_app/css/10401_compare.css
+}

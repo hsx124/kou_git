@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.link {
+  display: inline-block;
+  margin: 10px 0px 10px 10px;
+  width: 30%;
+  font-size: 18px;
+  vertical-align: middle;
+}

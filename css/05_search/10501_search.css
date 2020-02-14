@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.search-keyword-area .input-panel-label {
+  cursor: default;
+}
+.search-keyword-area .input-panel-label span,
+.input-panel-child-title span {
+  transform: rotate(0deg);
+}
+
+.input-panel-label:hover{
+  cursor: pointer;
+  background: linear-gradient(rgba(250,190,0,0.8), rgba(237,107,0,0.8))
+}
