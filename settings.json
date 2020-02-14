@@ -1,0 +1,6 @@
+{
+    "python.pythonPath": "C:\\Users\\bitD71\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
+     // コード整形
+     "python.formatting.provider": "autopep8",
+     "python.formatting.formatOnSave": true,
+}
