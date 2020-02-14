@@ -1,0 +1,76 @@
+{% extends 'admin_app/base/b00_base.html' %}
+{% block page_title %}アニメ情報 一覧{% endblock %}
+{% block extra_head %}
+
+<!-- jQuery -->
+{% include 'admin_app/base/b01_import_jquery.html' %}
+
+<!-- jqGrid -->
+{% include 'admin_app/base/b02_import_jqgrid.html' %}
+
+<!-- 共通 -->
+{% include 'admin_app/base/b03_import_common.html' %}
+
+<!-- 更新履歴欄 -->
+{% include 'admin_app/base/b04_import_notice_table.html' %}
+
+<!-- 入力系共通 -->
+{% include 'admin_app/base/b05_import_inpututil.html' %}
+
+<!-- djangoオブジェクト連携 -->
+{% include 'admin_app/base/b99_django_js.html' %}
+
+<!-- 個別 -->
+{% load static %}
+<script src="{% static 'admin_app/javascript/05_anime/20511_anime_list.js' %}"></script>
+<link rel="stylesheet" href="{% static 'admin_app/css/05_anime/20511_anime_list.css' %}">
+
+{% endblock %}
+{% block content %}
+{% include 'admin_app/base/b09_create_menu.html' %}
+<div class="contents">
+    {% include 'admin_app/base/b15_create_error_msg.html' %}
+    {% include 'admin_app/base/b10_create_notice_table.html' %}
+    <h4>アニメ情報 一覧</h4>
+    <div class="input-area">
+        <!-- メッセージエリア -->
+        {% include 'admin_app/base/b13_create_status_msg.html' %}
+        <!-- /メッセージエリア -->
+
+        <h5>CSVダウンロード（全件）</h5>
+        <div id="list" class="spacer-8">
+            <div class="button-area">
+                <input type="file" id="file" style="display: none;" />
+                <div class="base-button create-button">新規登録</div>
+                <div id="csv-all" class="base-button csv-download-button">CSVダウンロード（全件）</div>
+            </div>
+        </div>
+
+        <div class="spacer-8"></div>
+        {% include 'admin_app/base/b12_create_grid.html' %}
+    </div>
+</div>
+</div>
+<div style="display: none">
+    <div id="delete-confirm-dialog" title="アニメマスタ削除確認">
+        以下のアニメ情報を削除してよろしいですか？
+        <div class="spacer-8"></div>
+        <table class="delete-confirm-table">
+            <tr>
+                <td class="label">作品名</td>
+                <td class="value" id="delete-sakuhin-name"></td>
+            </tr>
+            <tr>
+                <td class="label">アニメ作品名</td>
+                <td class="value" id="delete-anime-name"></td>
+            </tr>
+        </table>
+        <div class="dialog-button-area">
+            <div class="spacer-8"></div>
+            <button class="dialog-button delete-button">削除</button>
+            <button class="dialog-button cancel-botton">キャンセル</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

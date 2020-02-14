@@ -1,0 +1,12 @@
+{% load static %}
+{%if show_msg.status == 'create' %}
+<div id="status-msg" class="status-msg">
+    <span class="ui-icon ui-icon-orange ui-icon-circle-check"></span>『<span id="target-name">{{show_msg.targetname}}</span>』を<span id="edit-status">追加</span>しました。
+</div>
+
+{% elif show_msg.status == 'update' %}
+<div id="status-msg" class="status-msg">
+    <span class="ui-icon ui-icon-orange ui-icon-circle-check"></span>『<span id="target-name">{{show_msg.targetname}}</span>』を<span id="edit-status">編集</span>しました。
+</div>
+
+{% endif %}

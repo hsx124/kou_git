@@ -1,0 +1,8 @@
+<script>
+    var djangoObj
+    $(function () {
+        var tmpDjangoObj = "{{ object_to_javascript | escapejs}}"
+        djangoObj = JSON.parse(tmpDjangoObj);
+    });
+
+</script>

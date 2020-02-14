@@ -1,0 +1,247 @@
+{% extends 'admin_app/base/b00_base.html' %}
+
+{% block page_title %}タグ紐づけ情報 一覧画面{% endblock %}
+
+{% block extra_head %}
+<!-- jQuery -->
+{% include 'admin_app/base/b01_import_jquery.html' %}
+
+<!-- jqGrid -->
+{% include 'admin_app/base/b02_import_jqgrid.html' %}
+
+<!-- 共通 -->
+{% include 'admin_app/base/b03_import_common.html' %}
+<!-- 更新履歴欄 -->
+{% include 'admin_app/base/b04_import_notice_table.html' %}
+
+<!-- 入力系共通 -->
+{% include 'admin_app/base/b05_import_inpututil.html' %}
+
+<!-- djangoオブジェクト連携 -->
+{% include 'admin_app/base/b99_django_js.html' %}
+<!-- 個別 -->
+{% load static %}
+<script src="{% static 'admin_app/javascript/10_sakuhin_tag/21011_sakuhin_tag_bind.js' %}"></script>
+<link rel="stylesheet" href="{% static 'admin_app/css/10_sakuhin_tag/21011_sakuhin_tag_bind.css' %}">
+
+{% endblock %}
+
+{% block content %}
+{% include 'admin_app/base/b09_create_menu.html' %}
+<div id="contents" class="contents" style="display: none">
+    {% csrf_token %}
+    {% include 'admin_app/base/b15_create_error_msg.html' %}
+    {% include 'admin_app/base/b10_create_notice_table.html' %}
+    <h4>タグ紐づけ情報</h4>
+    <div class="input-area">
+        <h5>タイトル検索</h5>
+        <table class="input-table middle-table list-area">
+            <tbody>
+                <tr>
+                    <th>検索カテゴリ</th>
+                    <td>
+                        <input id="manga-checkbox" class="checkbox" name="checkbox" type="checkbox" value="manga" checked="checked">
+                        <label for="manga-checkbox" class="checkbox-label">マンガ</label>
+                        <input id="novel-checkbox" class="checkbox" name="checkbox" type="checkbox" value="novel" checked="checked">
+                        <label for="novel-checkbox" class="checkbox-label">小説</label>
+                        <input id="anime-checkbox" class="checkbox" name="checkbox" type="checkbox" value="anime" checked="checked">
+                        <label for="anime-checkbox" class="checkbox-label">アニメ</label>
+                        <input id="app-checkbox" class="checkbox" name="checkbox" type="checkbox" value="app" checked="checked">
+                        <label for="app-checkbox" class="checkbox-label">アプリ</label>
+                        <input id="game-checkbox" class="checkbox" name="checkbox" type="checkbox" value="app" checked="checked">
+                        <label for="game-checkbox" class="checkbox-label">ゲーム</label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>タイトル検索</th>
+                    <td>
+                        <input id="input-title-name" name="input_title_name" type="text" class="large" maxlength="100" value="" />
+                        <div class="search-button base-button title-search-button search-title">検索</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="">
+        <div class="input-area tag-select-area">
+            <h5>タグ一覧</h5>
+            <table class="input-table tag-table list-area">
+                <tbody>
+                    <tr>
+                        <th>選択<br>タイトル</th>
+                        <td>
+                            <div class="select-title"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>コア1/<br>コア2</th>
+                        <td>
+                            <select name="core_1" id="core-1">
+                                <option value="" {% if object_to_html.form.core_code == ''%} selected{% endif %}>未設定</option>
+                                {% for obj in object_to_html.core %}
+                                <option value="{{ obj.core_code }}" {% if object_to_html.form.core_code == obj.core_code %} selected{% endif %}>{{obj.core_name}}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="spacer-8"></div>
+                            <select name="core_2" id="core-2">
+                                <option value="" {% if object_to_html.form.core_code == ''%} selected{% endif %}>未設定</option>
+                                {% for obj in object_to_html.core %}
+                                <option value="{{ obj.core_code }}" {% if object_to_html.form.core_code == obj.core_code %} selected{% endif %}>{{obj.core_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+
+                    </tr>
+                    <th>タグ選択</th>
+                    <td>
+                        <select name="" id="">
+                            <option value="">選択してください</option>
+                            <option value="">作品形態</option>
+                            <option value="" selected>人物・職業</option>
+                            <option value="">設定・テーマ</option>
+                            <option value="">時代・場所</option>
+                            <option value="">競技・音楽</option>
+                            <option value="">モノ・象徴</option>
+                        </select>
+                        <button class="search-button base-button tag-select-button">検索</button>
+                    </td>
+                    </tr>
+                    <tr>
+                        <th>タグ1~5</th>
+                        <td>
+
+                            <ul id="tag-1-5" class="high-priority jquery-ui-sortable">
+                                <li id="" class="jquery-ui-draggable">対戦格闘ゲーム<span class="tag-delete-button">×</span></li>
+                                <li id="" class="jquery-ui-draggable">人体改造・変身<span class="tag-delete-button">×</span></li>
+                                <li id="" class="jquery-ui-draggable">必殺技<span class="tag-delete-button">×</span></li>
+                                <li id="" class="jquery-ui-draggable">旅<span class="tag-delete-button">×</span></li>
+                            </ul>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>タグ6~10</th>
+                        <td>
+
+                            <ul id="tag-6-10" class="middle-priority jquery-ui-sortable">
+                                <li class="jquery-ui-draggable">タグ6<span class="tag-delete-button">×</span></li>
+                                <li class="jquery-ui-draggable">タグ7<span class="tag-delete-button">×</span></li>
+                                <li class="jquery-ui-draggable">タグ8<span class="tag-delete-button">×</span></li>
+                                <li class="jquery-ui-draggable">タグ9<span class="tag-delete-button">×</span></li>
+                                <li class="jquery-ui-draggable">タグ10<span class="tag-delete-button">×</span></li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>タグ11~20</th>
+                        <td>
+
+                            <ul id="tag-11-20" class="low-priority jquery-ui-sortable">
+                                <li class="jquery-ui-draggable">タグ11<span class="tag-delete-button">×</span></li>
+                                <li class="jquery-ui-draggable">タグ12<span class="tag-delete-button">×</span></li>
+                                <li class="jquery-ui-draggable">タグ13<span class="tag-delete-button">×</span></li>
+                                <li class="jquery-ui-draggable">タグ14<span class="tag-delete-button">×</span></li>
+                                <li class="jquery-ui-draggable">タグ15<span class="tag-delete-button">×</span></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="input-table middle-table tag-select-table list-area">
+                <tbody>
+                    <tr>
+                        <th>タグ</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="tag-list-area">
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="input-table tag-table list-area">
+                <tbody>
+                    <tr>
+
+                </tbody>
+            </table>
+            <div class=" button-area list-area">
+                <div class="back-button-area">
+                    <div class="base-button blue back-button clear-button">タグをクリア</div>
+                </div>
+                <div class="next-button-area">
+                    <div class="save-more-button base-button next-button">タグを保存</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- start タイトル検索モーダル -->
+<div style="display: none">
+    <div id="title-search-dialog">
+        <div class="dialog-contents">
+            <div id="list">
+                <table id="list-grid"></table>
+                <div id="pager"></div>
+            </div>
+            <div class="spacer-8"></div>
+            <div class="button-area">
+                <div class="back-button-area">
+                    <div class="base-button narrow blue cancel-button">キャンセル</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end タイトル検索モーダル -->
+
+<!-- start タグ選択モーダル -->
+<div style="display: none">
+    <div id="tag-select-dialog">
+        <div class="dialog-contents">
+            <div class="tag-list-area">
+
+            </div>
+            <div class="spacer-8"></div>
+            <div class="button-area">
+                <div class="back-button-area">
+                    <div class="base-button blue back-button tag-select-cancel-button">キャンセル</div>
+                </div>
+                <div class="next-button-area">
+                    <div class="save-button base-button next-button add-tag-button">タグを追加</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end タグ選択モーダル -->
+<!-- start 削除ダイアログ -->
+<div style="display: none">
+    <div id="delete-confirm-dialog" title="タグ情報削除確認">
+        以下のタグ紐づけ情報を削除してよろしいですか？
+        <div class="spacer-8"></div>
+        <table class="delete-confirm-table">
+            <tr>
+                <td class="label">タグコード</td>
+                <td class="value" id="delete-tag-code"></td>
+            </tr>
+            <tr>
+                <td class="label">タグ名</td>
+                <td class="value" id="delete-tag-name"></td>
+            </tr>
+        </table>
+        {% csrf_token %}
+        <div class="dialog-button-area">
+            <div class="spacer-8"></div>
+            <input type="hidden" id="delete-name" name="delete-name" value="">
+            <button class="dialog-button delete-button">削除</button>
+            <button type="button" class="dialog-button cancel-botton">キャンセル</button>
+        </div>
+    </div>
+</div>
+<!-- end 削除ダイアログ -->
+{% endblock %}

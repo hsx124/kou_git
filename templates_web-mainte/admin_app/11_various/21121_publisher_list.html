@@ -1,0 +1,75 @@
+{% extends 'admin_app/base/b00_base.html' %}
+
+{% block page_title %}出版社情報 一覧画面{% endblock %}
+
+{% block extra_head %}
+<!-- jQuery -->
+{% include 'admin_app/base/b01_import_jquery.html' %}
+
+<!-- jqGrid -->
+{% include 'admin_app/base/b02_import_jqgrid.html' %}
+
+<!-- 共通 -->
+{% include 'admin_app/base/b03_import_common.html' %}
+<!-- 更新履歴欄 -->
+{% include 'admin_app/base/b04_import_notice_table.html' %}
+
+<!-- 入力系共通 -->
+{% include 'admin_app/base/b05_import_inpututil.html' %}
+
+<!-- djangoオブジェクト連携 -->
+{% include 'admin_app/base/b99_django_js.html' %}
+<!-- 個別 -->
+{% load static %}
+<script src="{% static 'admin_app/javascript/11_various/21121_publisher_list.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+{% include 'admin_app/base/b09_create_menu.html' %}
+<div id="contents" class="contents" style="display: none">
+    {% include 'admin_app/base/b15_create_error_msg.html' %}
+    {% include 'admin_app/base/b10_create_notice_table.html' %}
+    <h4>出版社情報 一覧</h4>
+    <div class="grid-list">
+        {% include 'admin_app/base/b13_create_status_msg.html' %}
+        <div id="list">
+            <div class="list-button-area">
+                <input type="file" id="file" style="display: none;" />
+                <div class="base-button create-button">新規登録</div>
+                <div id="csv-all" class="base-button csv-download-button">CSVダウンロード</div>
+            </div>
+            <div class="spacer-8"></div>
+            {% include 'admin_app/base/b12_create_grid.html' %}
+        </div>
+    </div>
+</div>
+
+<!-- start 削除ダイアログ -->
+<div style="display: none">
+    <div id="delete-confirm-dialog" title="出版社情報削除確認">
+        以下の出版社情報を削除してよろしいですか？
+        <div class="spacer-8"></div>
+        <table class="delete-confirm-table">
+            <tr>
+                <td class="label">出版社コード</td>
+                <td class="value" id="delete-publisher-code"></td>
+            </tr>
+            <tr>
+                <td class="label">出版社名</td>
+                <td class="value" id="delete-publisher-name"></td>
+            </tr>
+        </table>
+        {% csrf_token %}
+        <div class="dialog-button-area">
+            <div class="spacer-8"></div>
+            <input type="hidden" id="delete-name" name="delete-name" value="">
+            <button type="button" class="dialog-button cancel-botton">キャンセル</button>
+            <button class="dialog-button delete-button">削除</button>
+        </div>
+    </div>
+</div>
+<!-- end 削除ダイアログ -->
+
+</div>
+{% endblock %}

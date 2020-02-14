@@ -1,0 +1,11 @@
+{% load static %}
+{%if show_msg.status == 'param_error' %}
+<div id="status-msg" class="status-msg submit-error-msg">
+    エラーが発生しました、もう一度やり直してください。
+</div>
+
+{%elif show_msg.status == 'value_error' %}
+<div id="status-msg" class="status-msg submit-error-msg">
+    指定された{{show_msg.targetname}}は存在しません、もう一度やり直してください。
+</div>
+{% endif %}

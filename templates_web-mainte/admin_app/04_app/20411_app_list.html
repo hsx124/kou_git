@@ -1,0 +1,84 @@
+{% extends 'admin_app/base/b00_base.html' %}
+{% block page_title %}アプリ情報 一覧{% endblock %}
+{% block extra_head %}
+
+<!-- jQuery -->
+{% include 'admin_app/base/b01_import_jquery.html' %}
+
+<!-- jqGrid -->
+{% include 'admin_app/base/b02_import_jqgrid.html' %}
+
+<!-- 共通 -->
+{% include 'admin_app/base/b03_import_common.html' %}
+
+<!-- 更新履歴欄 -->
+{% include 'admin_app/base/b04_import_notice_table.html' %}
+
+<!-- 入力系共通 -->
+{% include 'admin_app/base/b05_import_inpututil.html' %}
+
+<!-- djangoオブジェクト連携 -->
+{% include 'admin_app/base/b99_django_js.html' %}
+<!-- 個別 -->
+{% load static %}
+<script src="{% static 'admin_app/javascript/04_app/20411_app_list.js' %}"></script>
+<link rel="stylesheet" href="{% static 'admin_app/css/04_app/20411_app_list.css' %}">
+
+{% endblock %}
+{% block content %}
+{% include 'admin_app/base/b09_create_menu.html' %}
+<div class="contents">
+    {% include 'admin_app/base/b15_create_error_msg.html' %}
+    {% include 'admin_app/base/b10_create_notice_table.html' %}
+
+    <h4>アプリ情報 一覧</h4>
+    <div id="app-list" class="input-area">
+        <!-- メッセージエリア -->
+        {% include 'admin_app/base/b13_create_status_msg.html' %}
+        <!-- /メッセージエリア -->
+
+        <h5>CSVダウンロード（全件）</h5>
+        <div id="list" class="spacer-8">
+            <div class="button-area">
+                <input type="file" id="file" style="display: none;" />
+                <div id="csv-all" class="base-button csv-download-button">CSVダウンロード（全件）</div>
+            </div>
+        </div>
+
+        <!-- IP名検索エリア -->
+        {% include 'admin_app/base/b14_create_sakuhin_search.html' %}
+
+        <div class="search-list">
+            <h5>検索結果</h5>
+            <div id="grid-area" class="spacer-8">
+                <div class="button-area">
+                    <input type="file" id="file" style="display: none;" />
+                    <div class="base-button create-button">新規登録</div>
+                    <div id="csv-ip" class="base-button csv-download-button">CSVダウンロード（IP毎）</div>
+                </div>
+                <div class="spacer-8"></div>
+                <table id="list-grid"></table>
+                <div id="pager"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display: none">
+    <div id="delete-confirm-dialog" title="アプリマスタ削除確認">
+        以下のアプリ情報を削除してよろしいですか？
+        <div class="spacer-8"></div>
+        <table class="delete-confirm-table">
+            <tr>
+                <td class="label">アプリ名</td>
+                <td class="value" id="delete-app"></td>
+            </tr>
+        </table>
+        <div class="dialog-button-area">
+            <div class="spacer-8"></div>
+            <button class="dialog-button delete-button">削除</button>
+            <button class="dialog-button cancel-botton">キャンセル</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

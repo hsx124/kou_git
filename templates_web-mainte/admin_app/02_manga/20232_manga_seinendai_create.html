@@ -1,0 +1,154 @@
+{% extends 'admin_app/base/b00_base.html' %}
+
+{% block page_title %}性年代情報 新規登録{% endblock %}
+
+{% block extra_head %}
+<!-- jQuery -->
+{% include 'admin_app/base/b01_import_jquery.html' %}
+
+<!-- 共通 -->
+{% include 'admin_app/base/b03_import_common.html' %}
+
+<!-- 入力系共通 -->
+{% include 'admin_app/base/b05_import_inpututil.html' %}
+
+<!-- djangoオブジェクト連携 -->
+{% include 'admin_app/base/b99_django_js.html' %}
+
+<!-- sheetJS -->
+{% load static %}
+<script src="{% static 'admin_app/lib/jquery/sheetJS/xlsx.full.min.js' %}"></script>
+<script src="{% static 'admin_app/lib/jquery/sheetJS/cpexcel.js' %}"></script>
+
+<!-- 個別 -->
+<script src="{% static 'admin_app/javascript/02_manga/20232_manga_seinendai_create.js' %}"></script>
+<script src="{% static 'admin_app/javascript/common/loading.js' %}"></script>
+<link rel="stylesheet" href="{% static 'admin_app/css/02_manga/20232_manga_seinendai_create.css' %}">
+<style>
+#drop {
+    border: 2px dashed #bbb;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 25px;
+    text-align: center;
+    font: 20pt bold, "Vollkorn";
+    color: #bbb;
+}
+</style>
+{% endblock %}
+{% block content %}
+{% include 'admin_app/base/b09_create_menu.html' %}
+<div id="contents" class="contents" style="display: none">
+    <h4>性年代情報 新規登録</h4>
+    <form action="{% url 'admin_app:20232_manga_seinendai_create' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="input-area">
+            <table class="input-table">
+                <tbody>
+                    <tr>
+                        <th class="required">マンガタイトルコード</th>
+                        <td>
+                            <div>M000000044</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="required">マンガタイトル名</th>
+                        <td>
+                            <div>鋼の錬金術師</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="spacer-16"></div>
+            <div id="btn" class="base-button narrow file-select-button">ファイルを選択</div>
+            <input type="file" id="upload" multiple="multiple" accept=".xlsx, xls" /> <input id="uploadname" class="upload-text" placeholder="選択されていません" readonly />
+                <div class="spacer-8"></div>
+                <div id="drop">こちらに「WIN＋」からダウンロードしたファイルをドロップしてください</div>
+                <div class="spacer-16"></div>
+                <table class="input-table">
+                    <tbody>
+                        <tr>
+                            <th class="required">10歳以下</th>
+                            <td><label class="label male">男性：</label><input id="male-1" type="text" class="large" value="" /></td>
+                            <td><label class="label female">女性：</label><input id="female-1" type="text" class="large" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th class="required">11～15歳</th>
+                            <td><label class="label male">男性：</label><input id="male-2" type="text" class="large" value="" /></td>
+                            <td><label class="label female">女性：</label><input id="female-2" type="text" class="large" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th class="required">16～20歳</th>
+                            <td><label class="label male">男性：</label><input id="male-3" type="text" class="large" value="" /></td>
+                            <td><label class="label female">女性：</label><input id="female-3" type="text" class="large" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th class="required">21～25歳</th>
+                            <td><label class="label male">男性：</label><input id="male-4" type="text" class="large" value="" /></td>
+                            <td><label class="label female">女性：</label><input id="female-4" type="text" class="large" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th class="required">26～30歳</th>
+                            <td><label class="label male">男性：</label><input id="male-5" type="text" class="large" value="" /></td>
+                            <td><label class="label female">女性：</label><input id="female-5" type="text" class="large" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th class="required">31～35歳</th>
+                            <td><label class="label male">男性：</label><input id="male-6" type="text" class="large" value="" /></td>
+                            <td><label class="label female">女性：</label><input id="female-6" type="text" class="large" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th class="required">36～40歳</th>
+                            <td><label class="label male">男性：</label><input id="male-7" type="text" class="large" value="" /></td>
+                            <td><label class="label female">女性：</label><input id="female-7" type="text" class="large" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th class="required">41～45歳</th>
+                            <td><label class="label male">男性：</label><input id="male-8" type="text" class="large" value="" /></td>
+                            <td><label class="label female">女性：</label><input id="female-8" type="text" class="large" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th class="required">46～50歳</th>
+                            <td><label class="label male">男性：</label><input id="male-9" type="text" class="large" value="" /></td>
+                            <td><label class="label female">女性：</label><input id="female-9" type="text" class="large" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th class="required">51歳以上</th>
+                            <td><label class="label male">男性：</label><input id="male-10" type="text" class="large" value="" /></td>
+                            <td><label class="label female">女性：</label><input id="female-10" type="text" class="large" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th class="required" rowspan="2">総人数</th>
+                            <td><label class="label male">男性：</label><input id="male-total" type="text" class="large" value="" /></td>
+                            <td><label class="label female">女性：</label><input id="female-total" type="text" class="large" value="" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><label class="label">合計：</label><input id="total" type="text" class="large" value="" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            <div class="button-area">
+                <div class="back-button-area">
+                    <div class="base-button blue back-button">一覧に戻る</div>
+                </div>
+                <div class="next-button-area">
+                    <input type="submit" value="保存" class="save-button base-button next-button" />
+                    <input type="submit" value="保存してもう１つ追加" class="save-more-button base-button next-button" name="save_more_one" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div style="display: none">
+    <div id="isbn-dialog">
+        <div class="dialog-contents">
+            <div id="list">
+                <table id="list-grid"></table>
+                <div id="pager"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

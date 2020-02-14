@@ -1,0 +1,265 @@
+{% extends 'admin_app/base/b00_base.html' %}
+
+{% block page_title %}IP紐づけ情報 一覧画面{% endblock %}
+
+{% block extra_head %}
+
+<!-- jQuery -->
+{% include 'admin_app/base/b01_import_jquery.html' %}
+
+<!-- jqGrid -->
+{% include 'admin_app/base/b02_import_jqgrid.html' %}
+
+<!-- 共通 -->
+{% include 'admin_app/base/b03_import_common.html' %}
+
+<!-- ツールチープ -->
+{% include 'admin_app/base/b16_create_tooltip.html' %}
+
+<!-- 更新履歴欄 -->
+{% include 'admin_app/base/b04_import_notice_table.html' %}
+
+<!-- 入力系共通 -->
+{% include 'admin_app/base/b05_import_inpututil.html' %}
+
+<!-- djangoオブジェクト連携 -->
+{% include 'admin_app/base/b99_django_js.html' %}
+<!-- 個別 -->
+{% load static %}
+<script src="{% static 'admin_app/javascript/01_ip_sakuhin/20114_ip_bind.js' %}"></script>
+<link rel="stylesheet" href="{% static 'admin_app/css/01_ip_sakuhin/20114_ip_bind.css' %}">
+<link rel="stylesheet" href="{% static 'admin_app/css/common/jquery-tab.css' %}">
+
+<script type="text/javascript">
+    $(function () {
+        $(".tabs").tabs();
+    });
+</script>
+
+{% endblock %}
+
+{% block content %}
+{% include 'admin_app/base/b09_create_menu.html' %}
+<div id="contents" class="contents tabs" style="display: none">
+    {% include 'admin_app/base/b10_create_notice_table.html' %}
+    {% csrf_token %}
+    <h4>IP紐づけ情報</h4>
+    <div class="grid-list">
+        <div id="errorMsg" class="status-msg submit-error-msg" style="display: none">エラーが発生しました、もう一度やり直してください。</div>
+        <ul>
+            <li id="tab-1"><a href="#tabs-1">IPに作品を紐づける</a></li>
+            <li id="tab-2"><a href="#tabs-2">作品にIPを紐づける</a></li>
+        </ul>
+        <div id="tabs-1">
+            <div class="input-area">
+                <h5>IP選択</h5>
+                <table class="input-table ipbind-table list-area">
+                    <tbody>
+                        <tr>
+                            <th>IP名検索
+                                <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_IPBIND_001"></i>
+                            </th>
+                            <td>
+                                <input id="input-ipname" name="input_ipname" type="text" class="large" maxlength="100" value="" />
+                                <div class="search-button base-button search-ip">検索</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>選択IP名</th>
+                            <td>
+                                <span class="select-ip-doc"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="search-list connection-sakuhin-list">
+                    <h5>関連作品</h5>
+                    <div id="connectionsakuhin-list">
+                        <table class="input-table ipbind-table">
+                            <tbody>
+                                <tr>
+                                    <th>関連作品追加
+                                        <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_IPBIND_002"></i>
+                                    </th>
+                                    <td>
+                                        <input id="input-con-sakuhin" name="input_sakuhinname" type="text" class="large" maxlength="100" value="" />
+                                        <div class="search-button base-button search-connection-sakuhin">検索</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="spacer-8"></div>
+                        <table id="list-grid-connectionsakuhin"></table>
+                        <div id="connectionsakuhin-pager"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tabs-2">
+            <div class="input-area">
+                <h5>作品選択</h5>
+                <table class="input-table ipbind-table list-area">
+                    <tbody>
+                        <tr>
+                            <th>作品名検索
+                                <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_IPBIND_003"></i>
+                            </th>
+                            <td>
+                                <input id="input-sakuhin-name" name="input_sakuhinname" type="text" class="large" maxlength="100" value="" />
+                                <div class="search-button base-button search-sakuhin">検索</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>選択作品名</th>
+                            <td>
+                                <span class="select-sakuhin-doc"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="search-list connection-ip-list">
+                    <h5>関連IP</h5>
+                    <div id="connectionip-list">
+                        <table class="input-table ipbind-table">
+                            <tbody>
+                                <tr>
+                                    <th>関連IP追加
+                                        <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_IPBIND_004"></i>
+                                    </th>
+                                    <td>
+                                        <input id="input-con-ip" name="input_ipname" type="text" class="large" maxlength="100" value="" />
+                                        <div class="search-button base-button search-connection-ip">検索</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="spacer-8"></div>
+                        <table id="list-grid-connectionip"></table>
+                        <div id="connectionip-pager"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 作品紐付け解除ダイアログ -->
+<div style="display: none">
+    <div id="sakuhin-del-dialog" title="作品紐付け解除確認">
+        以下の作品紐付けを解除してよろしいですか？
+        <div class="spacer-8"></div>
+        <table class="delete-confirm-table">
+            <tr>
+                <td class="label">作品コード</td>
+                <td class="value" id="delete-sakuhin-code"></td>
+            </tr>
+            <tr>
+                <td class="label">作品名</td>
+                <td class="value" id="delete-sakuhin-name"></td>
+            </tr>
+        </table>
+        <div class="dialog-button-area">
+            <div class="spacer-8"></div>
+            <button class="dialog-button cancel-botton">キャンセル</button>
+            <button class="dialog-button delete-button">紐付け解除</button>
+        </div>
+    </div>
+</div>
+
+<!-- IP紐付け解除ダイアログ -->
+<div style="display: none">
+    <div id="ip-del-dialog" title="IP紐付け解除確認">
+        以下のIP紐付けを解除してよろしいですか？
+        <div class="spacer-8"></div>
+        <table class="delete-confirm-table">
+            <tr>
+                <td class="label">IPコード</td>
+                <td class="value" id="delete-ip-code"></td>
+            </tr>
+            <tr>
+                <td class="label">IP名</td>
+                <td class="value" id="delete-ip-name"></td>
+            </tr>
+        </table>
+        <div class="dialog-button-area">
+            <div class="spacer-8"></div>
+            <button class="dialog-button cancel-botton">キャンセル</button>
+            <button class="dialog-button delete-button">紐付け解除</button>
+        </div>
+    </div>
+</div>
+
+<!-- IPデータ一覧モーダル -->
+<div style="display: none">
+    <div id="ip-dialog">
+        <div class="dialog-contents">
+            <div id="ip-list">
+                <table id="list-grid-ip"></table>
+                <div id="ip-pager"></div>
+            </div>
+            <div class="spacer-8"></div>
+            <div class="button-area">
+                <div class="back-button-area">
+                    <button class="base-button narrow blue cancel-button">キャンセル</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 作品データ一覧モーダル -->
+<div style="display: none">
+    <div id="sakuhin-dialog">
+        <div class="dialog-contents">
+            <div id="sakuhin-list">
+                <table id="list-sakuhin-modal"></table>
+                <div id="sakuhin-pager"></div>
+            </div>
+            <div class="spacer-8"></div>
+            <div class="button-area">
+                <div class="back-button-area">
+                    <button class="base-button narrow blue cancel-button">キャンセル</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 関連作品一覧モーダル -->
+<div style="display: none">
+    <div id="connection-sakuhin-dialog">
+        <div class="dialog-contents">
+            <div id="connection-sakuhin-modal">
+                <table id="list-grid-sakuhin-con"></table>
+                <div id="modal-sakuhin-pager"></div>
+            </div>
+            <div class="spacer-8"></div>
+            <div class="button-area">
+                <div class="back-button-area">
+                    <button class="base-button narrow blue cancel-button">キャンセル</button>
+                    <button disabled class="base-button narrow orange con-sakuhin-add-button">関連作品を追加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 関連IP一覧モーダル -->
+<div style="display: none">
+    <div id="connection-ip-dialog">
+        <div class="dialog-contents">
+            <div id="connection-ip-modal">
+                <table id="list-grid-ip-con"></table>
+                <div id="modal-ip-pager"></div>
+            </div>
+            <div class="spacer-8"></div>
+            <div class="button-area">
+                <div class="back-button-area">
+                    <button class="base-button narrow blue cancel-button">キャンセル</button>
+                    <button disabled class="base-button narrow orange con-ip-add-button">関連IPを追加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

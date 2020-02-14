@@ -1,0 +1,81 @@
+{% extends 'admin_app/base/b00_base.html' %}
+
+{% block page_title %}コア情報 新規登録{% endblock %}
+
+{% block extra_head %}
+<!-- jQuery -->
+{% include 'admin_app/base/b01_import_jquery.html' %}
+
+<!-- 共通 -->
+{% include 'admin_app/base/b03_import_common.html' %}
+
+<!-- ツールチープ -->
+{% include 'admin_app/base/b16_create_tooltip.html' %}
+
+<!-- 入力系共通 -->
+{% include 'admin_app/base/b05_import_inpututil.html' %}
+
+<!-- djangoオブジェクト連携 -->
+{% include 'admin_app/base/b99_django_js.html' %}
+
+<!-- 個別 -->
+{% load static %}
+<script src="{% static 'admin_app/javascript/10_sakuhin_tag/21042_core_create.js' %}"></script>
+</head>
+{% endblock %}
+
+{% block content %}
+{% include 'admin_app/base/b09_create_menu.html' %}
+<div class="contents">
+    {% if object_to_html.insert_error_corecode %}
+    <div class="status-msg submit-error-msg">コアコードの重複が発生しました。コアコードの再発行を行ったため、もう一度ご登録ください。</div>
+    {% elif object_to_html.insert_error_corename %}
+    <div class="status-msg submit-error-msg">同一コア名で既にコア情報が登録されているため、新規登録を行うことが出来ませんでした。</div>
+    {% endif %}
+    <h4>コア情報 新規登録</h4>
+    <form action="{% url 'admin_app:21042_core_create' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="input-area">
+            <table class="input-table">
+                <tbody>
+                    <tr>
+                        <th class="required">コアコード</th>
+                        <td>
+                            {% if object_to_html.errors.core_code %}
+                                {% for obj in object_to_html.errors.core_code %}
+                                    <div class="input-err-msg">{{obj.message}}</div>
+                                {% endfor %}
+                            {% endif %}
+                            <input type="text" class="small input-disabled" readonly value="{{ object_to_html.form.core_code }}" name="core_code" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="required">コア名</th>
+                        <td>
+                            {% if object_to_html.errors.core_name %}
+                                {% for obj in object_to_html.errors.core_name %}
+                                    <div class="input-err-msg">{{obj.message}}</div>
+                                {% endfor %}
+                            {% endif %}
+                            【15文字以内】で入力してください。
+                            <br>
+                            <input type="text" class="middle" value="{{ object_to_html.form.core_name | default_if_none:''}}" name="core_name" />
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <div class="button-area">
+                <div class="back-button-area">
+                    <div class="base-button blue back-button">一覧に戻る</div>
+                </div>
+                <div class="next-button-area">
+                    <input type="submit" value="保存" class="save-button base-button next-button" />
+                    <input type="submit" value="保存してもう１つ追加" class="save-more-button base-button next-button" name="save_more_one" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

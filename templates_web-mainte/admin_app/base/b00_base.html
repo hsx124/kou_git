@@ -1,0 +1,30 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block page_title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" type="image/png" href="{% static 'admin_app/image/i-note_logo.png' %}">
+    <link rel="stylesheet" href="{% static 'admin_app/lib/fa/css/all.min.css' %}">
+    {% block extra_head %}{% endblock %}
+
+</head>
+
+<body>
+    {% if ENV_NAME %}
+    <div style="position:absolute;text-align:right;width:98%;top:3px;">{{ ENV_NAME }}</div>
+    {% endif %}
+    {% include 'admin_app/base/b11_create_header.html' %}
+
+    <div id="body" style="display: none">
+        {% block content %}{% endblock %}
+    </div>
+    <div id="footer"></div>
+
+</body>
+
+</html>
