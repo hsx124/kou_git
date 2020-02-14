@@ -1,0 +1,745 @@
+{% extends 'ipdds_app/b00_base.html' %}
+
+{% block page_title %} 作品一覧（タイトル順）画面 {% endblock %}
+
+{% block extra_head %}
+
+<!-- jQuery -->
+{% include './b01_jquery.html' %}
+
+<!-- bootstrap -->
+{% include './b04_bootstrap.html' %}
+
+<!-- 共通 -->
+{% include './b05_common.html' %}
+{% include 'ipdds_app/b06_djangoToJs.html' %}
+
+<!-- 個別 -->
+{% load static %}
+<script src="{% static 'ipdds_app/javascript/02_title_search.js' %}"></script>
+<link type="text/css" rel="stylesheet" href="{% static 'ipdds_app/css/02_title_search.css' %}" />
+
+{% endblock %} {% block content %}
+
+<div class="contents">
+  <h4>作品一覧（タイトル順）</h4>
+  <div class="detail-contents">
+    <div class="detail-area">
+      <div class="spacer_8"></div>
+      <div class="hiragana-map">
+        <span>あ</span>
+        <span>か</span>
+        <span>さ</span>
+        <span>た</span>
+        <span>な</span>
+        <span>は</span>
+        <span>ま</span>
+        <span>や</span>
+        <span>ら</span>
+        <span>わ</span>
+      </div>
+      <div class="all-open-close btn-border-orange">全表示/非表示</div>
+      <div class="spacer_4"></div>
+      <div class="input-panel-table">
+        <div class="category-label">あ行</div>
+        <div class="value">
+          <div class="select-contents link-list">
+            <div class="hiragana-map-small">
+              <span>あ</span>
+              <span>い</span>
+              <span>う</span>
+              <span>え</span>
+              <span>お</span>
+            </div>
+            <div class="all-open-close btn-border-orange">全表示/非表示</div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>あ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "あ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>い</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "い" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>う</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "う" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>え</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "え" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>お</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "お" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-panel-table">
+        <div class="category-label">か行</div>
+        <div class="value">
+          <div class="select-contents link-list">
+            <div class="hiragana-map-small">
+              <span>か</span>
+              <span>き</span>
+              <span>く</span>
+              <span>け</span>
+              <span>こ</span>
+            </div>
+            <div class="all-open-close btn-border-orange">全表示/非表示</div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>か</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "か" or key == "が" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>き</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "き" or key == "ぎ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>く</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "く" or key == "ぐ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>け</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "け" or key == "げ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>こ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "こ" or key == "ご" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-panel-table">
+        <div class="category-label">さ行</div>
+        <div class="value">
+          <div class="select-contents link-list">
+            <div class="hiragana-map-small">
+              <span>さ</span>
+              <span>し</span>
+              <span>す</span>
+              <span>せ</span>
+              <span>そ</span>
+            </div>
+            <div class="all-open-close btn-border-orange">全表示/非表示</div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>さ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "さ" or key == "ざ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>し</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "し" or key == "じ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>す</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "す" or key == "ず" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>せ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "せ" or key == "ぜ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>そ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "そ" or key == "ぞ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-panel-table">
+        <div class="category-label">た行</div>
+        <div class="value">
+          <div class="select-contents link-list">
+            <div class="hiragana-map-small">
+              <span>た</span>
+              <span>ち</span>
+              <span>つ</span>
+              <span>て</span>
+              <span>と</span>
+            </div>
+            <div class="all-open-close btn-border-orange">全表示/非表示</div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>た</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "た" or key == "だ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>ち</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "ち" or key == "ぢ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>つ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "つ" or key == "づ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>て</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "て" or key == "で" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>と</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "と" or key == "ど" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-panel-table">
+        <div class="category-label">な行</div>
+        <div class="value">
+          <div class="select-contents link-list">
+            <div class="hiragana-map-small">
+              <span>な</span>
+              <span>に</span>
+              <span>ぬ</span>
+              <span>ね</span>
+              <span>の</span>
+            </div>
+            <div class="all-open-close btn-border-orange">全表示/非表示</div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>な</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "な" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>に</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "に" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>ぬ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "ぬ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>ね</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "ね" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>の</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "の" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-panel-table">
+        <div class="category-label">は行</div>
+        <div class="value">
+          <div class="select-contents link-list">
+            <div class="hiragana-map-small">
+              <span>は</span>
+              <span>ひ</span>
+              <span>ふ</span>
+              <span>へ</span>
+              <span>ほ</span>
+            </div>
+            <div class="all-open-close btn-border-orange">全表示/非表示</div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>は</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "は" or key == "ば"　or key == "ぱ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>ひ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "ひ" or key == "び"　or key == "ぴ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>ふ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "ふ" or key == "ぶ"　or key == "ぷ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>へ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "へ" or key == "べ"　or key == "ぺ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>ほ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% if key == "ほ" or key == "ぼ"　or key == "ぽ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-panel-table">
+        <div class="category-label">ま行</div>
+        <div class="value">
+          <div class="select-contents link-list">
+            <div class="hiragana-map-small">
+              <span>ま</span>
+              <span>み</span>
+              <span>む</span>
+              <span>め</span>
+              <span>も</span>
+            </div>
+            <div class="all-open-close btn-border-orange">全表示/非表示</div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>ま</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "ま" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>み</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "み" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>む</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "む" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>め</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "め" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>も</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "も" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-panel-table">
+        <div class="category-label">や行</div>
+        <div class="value">
+          <div class="select-contents link-list">
+            <div class="hiragana-map-small">
+              <span>や</span>
+              <span>ゆ</span>
+              <span>よ</span>
+            </div>
+            <div class="all-open-close btn-border-orange">全表示/非表示</div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>や</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "や" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>ゆ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "ゆ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>よ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "よ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-panel-table">
+        <div class="category-label">ら行</div>
+        <div class="value">
+          <div class="select-contents link-list">
+            <div class="hiragana-map-small">
+              <span>ら</span>
+              <span>り</span>
+              <span>る</span>
+              <span>れ</span>
+              <span>ろ</span>
+            </div>
+            <div class="all-open-close btn-border-orange">全表示/非表示</div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>ら</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "ら" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>り</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "り" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>る</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "る" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>れ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "れ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>ろ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "ろ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-panel-table">
+        <div class="category-label">わ行</div>
+        <div class="value">
+          <div class="select-contents link-list">
+            <div class="hiragana-map-small">
+              <span>わ</span>
+              <span>を</span>
+              <span>ん</span>
+            </div>
+            <div class="all-open-close btn-border-orange">全表示/非表示</div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>わ</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "わ" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>を</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "を" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>ん</div>
+              <div class="input-panel-child-value hiragana-map-list">
+                {% for key,value in object_to_html.search_title.items %}
+                {% ifequal key "ん" %}
+                {% for obj in value %}
+                <a class="link" href="{% url 'ipdds_app:03_detail' %}?ip_code={{ obj.ip_code }}">{{ obj.ip_name }}</a>
+                {% endfor %}
+                {% endifequal %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spacer_16"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}

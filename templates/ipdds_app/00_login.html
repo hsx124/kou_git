@@ -1,0 +1,55 @@
+{% extends 'ipdds_app/b00_base.html' %}
+
+<!-- カスタムフィルター -->
+{% load nbsp %}
+
+{% block page_title %}HOME画面{% endblock %}
+
+{% block extra_head %}
+
+<!-- bootstrap -->
+{% include 'ipdds_app/b04_bootstrap.html' %}
+
+<!-- jQuery -->
+{% include 'ipdds_app/b01_jquery.html' %}
+
+<!-- 共通 -->
+{% include 'ipdds_app/b05_common.html' %}
+
+<!-- 個別 -->
+{% load static %}
+<script src="{% static 'ipdds_app/javascript/00_login.js' %}"></script>
+<link type="text/css" rel="stylesheet" href="{% static 'ipdds_app/css/00_login.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="contents">
+            <div class="detail-contents">
+                <div class="center">
+                        <div class="bg-box">
+                                <p class="please">ユーザーIDとパスワードを入力して【ログイン】ボタンを押してください。</p>
+                                <form method='post'>
+                                    {% csrf_token %}
+                                    <div class="error-hidden">
+                                    {% if form.errors %}
+                                        <p class="error">ユーザーIDまたはパスワードが正しくありません</p>
+                                    {% endif %}
+                                    </div>
+                                    <p class="user"><input id="id" type="text" name="username" placeholder="ユーザーID"></p>
+                                    <p class="pwd"><input id="pwd" type="password" name="password" placeholder="パスワード"></p>
+                                    <p class="in"><button type="submit" value="sub" id="login-button" class="button-blue">ログイン</button></p>
+                                </form>
+                                <a class="question">お問い合わせはこちらから</a>
+
+                        </div>
+                </div> 
+           </div>     
+    </div>
+    <div id="question" style="display:none;">
+        <p>お気軽にお問い合わせください。</p>
+        <p><i class="fas fa-envelope"></i>メールアドレス:○○○○@mail.com</p>
+        <p><i class="fas fa-phone"></i>電話:123-1234-5678</p>
+        <p>受付時間：9:00～17:00(土・日・祝日、夏期休暇、年末年始を除く)</p>
+        <span class="ui-helper-hidden-accessible"><input type="image"/></span>
+      </div>
+      {% endblock %}

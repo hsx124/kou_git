@@ -1,0 +1,260 @@
+{% extends 'ipdds_app/b00_base.html' %}
+
+<!-- カスタムフィルター -->
+{% load nbsp %}
+
+{% block page_title %}HOME画面{% endblock %}
+
+{% block extra_head %}
+<!-- jQuery -->
+{% include 'ipdds_app/b01_jquery.html' %}
+
+<!-- bootstrap -->
+{% include 'ipdds_app/b04_bootstrap.html' %}
+
+<!-- 共通 -->
+{% include 'ipdds_app/b05_common.html' %}
+{% include 'ipdds_app/b06_djangoToJs.html' %}
+
+<!-- 個別 -->
+{% load static %}
+<script src="{% static 'ipdds_app/javascript/01_home/10101_home.js' %}"></script>
+<link type="text/css" rel="stylesheet" href="{% static 'ipdds_app/css/01_home/10101_home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="contents" style="visibility:hidden">
+    <h4>ピックアップ！
+        <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_HOME_001"></i>
+    </h4>
+    <div class="key-visual-list-area">
+        {% for obj in object_to_html.key_visual %}
+        <div class="key-visual-group">
+            <div class="key-visual-img-area">
+                <img src="/static/ipdds_app/image/keyvisual/{{ obj.sakuhin_code }}/{{ obj.keyvisual_file_name }}" class="key-visual-list-item" data-sakuhin-code="{{ obj.sakuhin_code }}">
+            </div>
+            <div class="key-visual-tag-area" id="tag-{{ obj.sakuhin_code }}">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="spacer_8"></div>
+    {% if object_to_html.banner %}
+    <h4>i-noteからのお知らせ
+        <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_HOME_002"></i>
+    </h4>
+    <div class="link-area">
+        {% if object_to_html.banner|length > 0 %}
+        {% if object_to_html.banner.0.external_site_flg %}
+        <div class="link-item" onclick="TransitionUtil.transition('{{ object_to_html.banner.0.external_site }}') ">
+            {% else %}
+            {% if object_to_html.banner.0.media_report_code %}
+            <div class="link-item"
+                onclick="TransitionUtil.transition('/static/ipdds_app/file/media_report/{{ object_to_html.banner.0.banner_id }}/{{ object_to_html.banner.0.media_report_code }}') ">
+                {% else %}
+                <div class="link-item">
+                    {% endif %}
+                    {% endif %}
+                    <div class="link-left">
+                        <img onerror="KeyVisualUtil.notFound()" src="{{ object_to_html.banner.0.tumbnail_file_name }}" />
+                    </div>
+                    <div class="link-right js-text-overflow">
+                        <strong>{{ object_to_html.banner.0.subject }}</strong>
+                        <div class="spacer_8"></div>
+                        {{ object_to_html.banner.0.details | linebreaksbr | nbsp}}
+                    </div>
+                </div>
+                {% endif %}
+                <div>
+                    {% if object_to_html.banner|length > 1 %}
+                    {% if object_to_html.banner.1.external_site_flg %}
+                    <div class="link-item" onclick="TransitionUtil.transition('{{ object_to_html.banner.1.external_site }}') ">
+                        {% else %}
+                        {% if object_to_html.banner.1.media_report_code %}
+                        <div class="link-item"
+                            onclick="TransitionUtil.transition('/static/ipdds_app/file/media_report/{{ object_to_html.banner.1.banner_id }}/{{ object_to_html.banner.1.media_report_code }}') ">
+                            {% else %}
+                            <div class="link-item">
+                                {% endif %}
+                                {% endif %}
+                                <div class="link-left link-rihgtarea-left">
+                                    <img onerror="KeyVisualUtil.notFound()" src="{{ object_to_html.banner.1.tumbnail_file_name }}" />
+                                </div>
+                                <div class="link-right link-rihgtarea-right js-text-overflow">
+                                    <strong>{{ object_to_html.banner.1.subject }}</strong>
+                                    <div class="spacer_8"></div>
+                                    {{ object_to_html.banner.1.details | linebreaksbr | nbsp }}
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if object_to_html.banner|length > 2 %}
+                            {% if object_to_html.banner.2.external_site_flg %}
+                            <div class="link-item" onclick="TransitionUtil.transition('{{ object_to_html.banner.2.external_site }}') ">
+                                {% else %}
+                                {% if object_to_html.banner.2.media_report_code %}
+                                <div class="link-item"
+                                    onclick="TransitionUtil.transition('/static/ipdds_app/file/media_report/{{ object_to_html.banner.2.banner_id }}/{{ object_to_html.banner.2.media_report_code }}') ">
+                                    {% else %}
+                                    <div class="link-item">
+                                        {% endif %}
+                                        {% endif %}
+                                        <div class="link-left link-rihgtarea-left">
+                                            <img onerror="KeyVisualUtil.notFound()" src="{{ object_to_html.banner.2.tumbnail_file_name }}" />
+                                        </div>
+                                        <div class="link-right link-rihgtarea-right js-text-overflow">
+                                            <strong>{{ object_to_html.banner.2.subject }}</strong>
+                                            <div class="spacer_8"></div>
+                                            {{ object_to_html.banner.2.details | linebreaksbr | nbsp }}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if object_to_html.latest_notice %}
+                            <div class="spacer_16"></div>
+                            <h4>メディア部からのお知らせ
+                                <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_HOME_003"></i>
+                            </h4>
+                            <div class="media-notification" onclick="TransitionUtil.transition('{{ object_to_html.latest_notice.0.link_url }}')">
+                                <div class="description-area">
+                                    <strong>{{ object_to_html.latest_notice.0.subject }}</strong>
+                                    <div class="spacer_8"></div>
+                                    <div>
+                                        {{ object_to_html.latest_notice.0.details | linebreaksbr | nbsp }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="spacer_16"></div>
+                            <div class="news-area">
+                                <div class="news-header">
+                                    <div class="news-area-title">NEWS
+                                        <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_HOME_004"></i>
+                                    </div>
+                                    <div class="filter">
+                                        <div class="filter-item" id="id_button_all">すべて</div>
+                                        <div class="filter-item" id="id_button_news">お知らせ</div>
+                                        <div class="filter-item" id="id_button_sakuhin">新着作品</div>
+                                        <div class="filter-item" id="id_button_update">更新情報</div>
+                                    </div>
+                                </div>
+                                <table class="news-table">
+                                </table>
+                            </div>
+                            <div class="spacer_16"></div>
+                            {% if object_to_html.ranking_manga or object_to_html.ranking_app or object_to_html.ranking_twitter %}
+                            <h4>ランキング
+                                <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_HOME_005"></i>
+                            </h4>
+                            <div class="ranking-area">
+                                <div class="panel">
+                                    <div class="input-panel-label">マンガ 売上冊数ランキング({{ object_to_html.agg_period }})</div>
+                                    <div class="input-panel-body">
+                                        {% for obj in object_to_html.ranking_manga %}
+                                        <table class="ranking-table" onclick="window.location.href='/ipdds/detail?sakuhin_code={{ obj.sakuhin_code }}'">
+                                            <tr>
+                                                <td>
+                                                    <span class="rank">{{ obj.rank }}</span>
+                                                </td>
+                                                <td>
+                                                    <img onerror="KeyVisualUtil.notFound()" src="/static/ipdds_app/image/keyvisual/{{ obj.sakuhin_code}}/{{ obj.keyvisual_file_name}}"
+                                                        oncontextmenu="return false;" />
+                                                </td>
+                                                <td>
+                                                    <table class="ranking-value-table">
+                                                        <tr>
+                                                            <td>
+                                                                <span>
+                                                                    {{ obj.book_name}}
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span>{{ obj.qty_sales}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="panel">
+                                    <div class="input-panel-label">アプリ ダウンロード数ランキング({{ object_to_html.agg_period }})
+                                    </div>
+                                    <div class="input-panel-body">
+                                        {% for obj in object_to_html.ranking_app %}
+                                        <table class="ranking-table" onclick="window.location.href='/ipdds/detail?sakuhin_code={{ obj.sakuhin_code }}'">
+                                            <tr>
+                                                <td>
+                                                    <span class="rank">{{ obj.rank }}</span>
+                                                </td>
+                                                <td>
+                                                    <img onerror="KeyVisualUtil.notFound()" src="/static/ipdds_app/image/keyvisual/{{ obj.sakuhin_code }}/{{ obj.keyvisual_file_name }}"
+                                                        oncontextmenu="return false;" />
+                                                </td>
+                                                <td>
+                                                    <table class="ranking-value-table">
+                                                        <tr>
+                                                            <td>
+                                                                <span>
+                                                                    {{ obj.app_name}}
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span>{{ obj.download_count}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="panel">
+                                    <div class="input-panel-label">Twitter フォロワー数
+                                        急上昇ランキング({{ object_to_html.agg_period }})</div>
+                                    <div class="input-panel-body">
+                                        {% for obj in object_to_html.ranking_twitter %}
+                                        <table class="ranking-table" onclick="window.location.href='/ipdds/detail?sakuhin_code={{ obj.sakuhin_code }}'">
+                                            <tr>
+                                                <td>
+                                                    <span class="rank">{{ obj.rank }}</span>
+                                                </td>
+                                                <td>
+                                                    <img onerror="KeyVisualUtil.notFound()" src="/static/ipdds_app/image/keyvisual/{{ obj.sakuhin_code}}/{{ obj.keyvisual_file_name}}"
+                                                        oncontextmenu="return false;" />
+                                                </td>
+                                                <td>
+                                                    <table class="ranking-value-table">
+                                                        <tr>
+                                                            <td>
+                                                                <span>
+                                                                    {{ obj.account_name}}
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span>{{ obj.follower_count}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="spacer_8"></div>
+
+                        </div>
+                        {% endblock %}

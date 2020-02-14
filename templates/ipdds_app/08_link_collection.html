@@ -1,0 +1,63 @@
+{% extends 'ipdds_app/b00_base.html' %}
+
+{% block page_title %} リンク集 {% endblock %}
+
+{% block extra_head %}
+
+<!-- jQuery -->
+{% include './b01_jquery.html' %}
+
+<!-- bootstrap -->
+{% include './b04_bootstrap.html' %}
+
+<!-- 共通 -->
+{% include './b05_common.html' %}
+
+<!-- 個別 -->
+{% load static %}
+<script src="{% static 'ipdds_app/javascript/08_link_collection.js' %}"></script>
+<link type="text/css" rel="stylesheet" href="{% static 'ipdds_app/css/08_link_collection.css' %}" />
+
+{% endblock %} {% block content %}
+
+<!-- コンテンツ START -->
+<div class="contents" style="display:none">
+  <h4>リンク集
+    <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_LINKCOLLECTION_001"></i>
+  </h4>
+  <div class="detail-contents">
+    <div class="detail-area">
+      <div class="all-open-close btn-border-orange">全表示/非表示</div>
+      {% for key_each_year, value_each_year in object_to_html.link_collection.items %}
+      <div class="input-panel-table">
+        <div class="category-label">{{ key_each_year }}年</div>
+        <div class="value">
+          <div class="select-contents link-list">
+            <div class="all-open-close btn-border-orange">全表示/非表示</div>
+            {% for key_each_category, value_each_category in value_each_year.items %}
+            <div class="input-panel-child-detail">
+              <div class="input-panel-child-title"><span>▼</span>{{ key_each_category }}</div>
+              <div class="input-panel-child-value">
+                <table>
+                  {% for v in value_each_category%}
+                  <tr>
+                    <td><a class="link" href="/static/ipdds_app/file/whitepaper/{{ v.id }}/{{ v.file_name }}" target="_blank">{{ v.file_name }}</a></td>
+                    <td>
+                      <p>{{ v.instructions |　default_if_none:"ー" | linebreaksbr }}</p>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </table>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="spacer_16"></div>
+  </div>
+</div>
+</div>
+{% endblock %}

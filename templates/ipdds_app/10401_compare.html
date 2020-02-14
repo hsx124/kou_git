@@ -1,0 +1,487 @@
+<<<<<<< HEAD:web/web-front/ipdds/ipdds_app/templates/ipdds_app/04_compare.html
+{% extends 'ipdds_app/b00_base.html' %}
+
+{% block page_title %}IP比較画面{% endblock %}
+
+{% block extra_head %}
+
+<!-- jQuery -->
+{% include './b01_jquery.html' %}
+
+<!-- jqPlot -->
+{% include './b02_jqplot.html' %}
+
+<!-- bootstrap -->
+{% include 'ipdds_app/b04_bootstrap.html' %}
+
+<!-- jqGrid -->
+{% include './b03_jqgrid.html' %}
+
+<!-- 共通 -->
+{% include './b05_common.html' %}
+{% include 'ipdds_app/b06_djangoToJs.html' %}
+
+<!-- 個別 -->
+{% load static %}
+<link type="text/css" rel="stylesheet" href="{% static 'ipdds_app/lib/jquery/jquery-ui-themes-1.12.1/themes/sunny/jquery-ui.min.css' %}" />
+<script src="{% static 'ipdds_app/javascript/04_compare.js' %}"></script>
+<link type="text/css" rel="stylesheet" href="{% static 'ipdds_app/css/04_compare.css' %}">
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+<script type="text/javascript">
+    $(function () {
+        $('.link-tab > .ip').addClass('selected')
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="contents" style="display:none;">
+    {% if object_to_html.ip_not_found %}
+    対象のIPは存在しません。
+    {% elif object_to_html.no_session_data %}
+    <div class="shopping-cart-style">
+        <div class="shopping-cart-icon">
+            <i class="fas fa-shopping-cart shopping-cart-color"></i>
+        </div>
+        <div class="shopping-cart-text-title">かごに作品を入れて比較してみよう！</div>
+        <div class="shopping-cart-text">STEP1：「作品を探す」ボタンから作品を検索する</div>
+        <div class="shopping-cart-text">STEP2：比較したい作品をかごに入れる</div>
+        <div class="shopping-cart-text">STEP3：作品を比較する</div>
+        <div class="shooping-button-div">
+            <button class="shopping-cart-button"><a class="shopping-link" href="{% url 'ipdds_app:06_similar_search' %}?">作品を探す</a></button>
+        </div>
+    </div>
+    {% else %}
+    <h4>
+        {% for obj in object_to_html.ip_name %}
+        <span>『</span>{{ obj.ip_name }}<span>』</span>
+        {% endfor %}
+        <span>の比較結果</span>
+    </h4>
+    <div class="detail-contents">
+        <div class="detail-area">
+            {% if object_to_html.gender_ratio %}
+            <div class="gender-ratio-area">
+                <h5>年代別男女比</h5>
+                {% for obj in object_to_html.gender_ratio %}
+                <div class="gender-ratio-detail">
+                    <strong>{{ obj.ip_name }}</strong>
+                    <div class="spacer_16"></div>
+                    <div class="gender-ratio-table">
+                        <table class="ipdds-table">
+                            <tr>
+                                <td>年代</td>
+                                <td>男性(%)</td>
+                                <td>女性(%)</td>
+                            </tr>
+                            <tr>
+                                <td>11歳~15歳</td>
+                                <td>{{ obj.male_11_15 }}</td>
+                                <td>{{ obj.female_11_15 }}</td>
+                            </tr>
+                            <tr>
+                                <td>16歳~20歳</td>
+                                <td>{{ obj.male_16_20 }}</td>
+                                <td>{{ obj.female_16_20 }}</td>
+                            </tr>
+                            <tr>
+                                <td>21歳~25歳</td>
+                                <td>{{ obj.male_21_25 }}</td>
+                                <td>{{ obj.female_21_25 }}</td>
+                            </tr>
+                            <tr>
+                                <td>26歳~30歳</td>
+                                <td>{{ obj.male_26_30 }}</td>
+                                <td>{{ obj.female_26_30 }}</td>
+                            </tr>
+                            <tr>
+                                <td>31歳~35歳</td>
+                                <td>{{ obj.male_31_35 }}</td>
+                                <td>{{ obj.female_31_35 }}</td>
+                            </tr>
+                            <tr>
+                                <td>36歳~40歳</td>
+                                <td>{{ obj.male_36_40 }}</td>
+                                <td>{{ obj.female_36_40 }}</td>
+                            </tr>
+                            <tr>
+                                <td>41歳~45歳</td>
+                                <td>{{ obj.male_41_45 }}</td>
+                                <td>{{ obj.female_41_45 }}</td>
+                            </tr>
+                            <tr>
+                                <td>46歳~50歳</td>
+                                <td>{{ obj.male_46_50 }}</td>
+                                <td>{{ obj.female_46_50 }}</td>
+                            </tr>
+                            <tr>
+                                <td>51歳以上</td>
+                                <td>{{ obj.male_51_over }}</td>
+                                <td>{{ obj.female_51_over }}</td>
+                            </tr>
+                        </table>
+                        <p class="total">【総人数:<span class="total-data">{{ obj.total }}人</span>】</p>
+                    </div>
+                    <div id="gender-ratio-graph{{forloop.counter}}" class="graph gender-ratio-graph"></div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="twitter-area">
+                <h5>Twitter
+                    <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_COMPARE_001"></i>
+                </h5>
+                <div class="graph-left">
+                    <div class="graph-center">
+                        <div class="table-area">
+                            <table id="grid-twitter" style="width:100%"></table>
+                            <div id="pager-twitter"></div>
+                        </div>
+                    </div>
+                    <div class="spacer_8"></div>
+                    <div class="replot-button-area">
+                        <button id="twitter-replot-button" class="button-blue btn-large">
+                            <i class="icon-refresh icon-white"></i>
+                            再描画
+                        </button>
+                    </div>
+                </div>
+                <div class="graph-right">
+                    <div id="twiter-follower-graph" class="graph"></div>
+                </div>
+            </div>
+            <div class="book-area">
+                <h5>マンガ
+                    <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_COMPARE_001"></i>
+                </h5>
+                <div class="graph-center">
+                    <div class="table-area">
+                        <table id="grid-book" style="width:100%"></table>
+                        <div id="pager-book"></div>
+                    </div>
+                </div>
+                <div class="replot-button-area">
+                    <button id="book-replot-button" class="button-blue btn-large compare-button">
+                        <i class="icon-refresh icon-white"></i>
+                        再描画
+                    </button>
+                </div>
+                <div class="graph-left">
+                    <div id="book-graph1" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="book-graph3" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="book-graph5" class="graph"></div>
+                </div>
+                <div class="graph-right">
+                    <div id="book-graph2" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="book-graph4" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="book-graph6" class="graph"></div>
+                </div>
+            </div>
+            <div class="game-area">
+                <h5>ゲーム
+                    <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_COMPARE_001"></i>
+                </h5>
+                <div class="graph-center">
+                    <div class="table-area">
+                        <table id="grid-game" style="width:100%"></table>
+                        <div id="pager-game"></div>
+                    </div>
+                </div>
+                <div class="replot-button-area" style="font-size: 4rem;">
+                    <button id="game-replot-button" class="button-blue btn-large compare-button">
+                        <i class="icon-refresh icon-white"></i>
+                        再描画
+                    </button>
+                </div>
+                <div class="graph-left">
+                    <div id="game-graph1" class="graph"></div>
+                </div>
+                <div class="graph-right">
+                    <div id="game-graph2" class="graph"></div>
+                </div>
+            </div>
+            <div class="app-area">
+                <h5>アプリ
+                    <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_COMPARE_001"></i>
+                </h5>
+                <div class="graph-center">
+                    <div class="table-area">
+                        <table id="grid-app" style="width:100%"></table>
+                        <div id="pager-app"></div>
+                    </div>
+                </div>
+                <div class="replot-button-area">
+                    <button id="app-replot-button" class="button-blue btn-large compare-button">
+                        <i class="icon-refresh icon-white"></i>
+                        再描画
+                    </button>
+                </div>
+                <div class="graph-left">
+                    <div id="app-graph-sales1" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="app-graph-sales2" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="app-graph-sales3" class="graph"></div>
+                </div>
+                <div class="graph-right">
+                    <div id="app-graph-download1" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="app-graph-download2" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="app-graph-download3" class="graph"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% csrf_token %}
+=======
+{% extends 'ipdds_app/b00_base.html' %}
+
+{% block page_title %}作品比較画面{% endblock %}
+
+{% block extra_head %}
+
+<!-- jQuery -->
+{% include 'ipdds_app/b01_jquery.html' %}
+
+<!-- jqPlot -->
+{% include 'ipdds_app/b02_jqplot.html' %}
+
+<!-- bootstrap -->
+{% include 'ipdds_app/b04_bootstrap.html' %}
+
+<!-- jqGrid -->
+{% include 'ipdds_app/b03_jqgrid.html' %}
+
+<!-- 共通 -->
+{% include 'ipdds_app/b05_common.html' %}
+{% include 'ipdds_app/b06_djangoToJs.html' %}
+
+<!-- 個別 -->
+{% load static %}
+<link type="text/css" rel="stylesheet" href="{% static 'ipdds_app/lib/jquery/jquery-ui-themes-1.12.1/themes/sunny/jquery-ui.min.css' %}" />
+<script src="{% static 'ipdds_app/javascript/04_compare/10401_compare.js' %}"></script>
+<link type="text/css" rel="stylesheet" href="{% static 'ipdds_app/css/04_compare/10401_compare.css' %}">
+<script type="text/javascript">
+    $(function () {
+        $('.link-tab > .ip').addClass('selected')
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="contents" style="display:none;">
+    {% if object_to_html.sakuhin_not_found %}
+    対象の作品は存在しません。
+    {% elif object_to_html.no_session_data %}
+    <div class="shopping-cart-style">
+        <div class="shopping-cart-icon">
+            <i class="fas fa-shopping-cart shopping-cart-color"></i>
+        </div>
+        <div class="shopping-cart-text-title">かごに作品を入れて比較してみよう！</div>
+        <div class="shopping-cart-text">STEP1：「作品を探す」ボタンから作品を検索する</div>
+        <div class="shopping-cart-text">STEP2：比較したい作品をかごに入れる</div>
+        <div class="shopping-cart-text">STEP3：作品を比較する</div>
+        <div class="shooping-button-div">
+            <button class="shopping-cart-button"><a class="shopping-link" href="{% url 'ipdds_app:10501_search' %}?">作品を探す</a></button>
+        </div>
+    </div>
+    {% else %}
+    <h4>
+        {% for obj in object_to_html.sakuhin_name %}
+        <span>『</span>{{ obj.sakuhin_name }}<span>』</span>
+        {% endfor %}
+        <span>の比較結果</span>
+    </h4>
+    <div class="detail-contents">
+        <div class="detail-area">
+            {% if object_to_html.gender_ratio %}
+            <div class="gender-ratio-area">
+                <h5>年代別男女比</h5>
+                {% for obj in object_to_html.gender_ratio %}
+                <div class="gender-ratio-detail">
+                    <strong>{{ obj.sakuhin_name }}</strong>
+                    <div class="spacer_16"></div>
+                    <div class="gender-ratio-table">
+                        <table class="ipdds-table">
+                            <tr>
+                                <td>年代</td>
+                                <td>男性(%)</td>
+                                <td>女性(%)</td>
+                            </tr>
+                            <tr>
+                                <td>11歳~15歳</td>
+                                <td>{{ obj.male_11_15 }}</td>
+                                <td>{{ obj.female_11_15 }}</td>
+                            </tr>
+                            <tr>
+                                <td>16歳~20歳</td>
+                                <td>{{ obj.male_16_20 }}</td>
+                                <td>{{ obj.female_16_20 }}</td>
+                            </tr>
+                            <tr>
+                                <td>21歳~25歳</td>
+                                <td>{{ obj.male_21_25 }}</td>
+                                <td>{{ obj.female_21_25 }}</td>
+                            </tr>
+                            <tr>
+                                <td>26歳~30歳</td>
+                                <td>{{ obj.male_26_30 }}</td>
+                                <td>{{ obj.female_26_30 }}</td>
+                            </tr>
+                            <tr>
+                                <td>31歳~35歳</td>
+                                <td>{{ obj.male_31_35 }}</td>
+                                <td>{{ obj.female_31_35 }}</td>
+                            </tr>
+                            <tr>
+                                <td>36歳~40歳</td>
+                                <td>{{ obj.male_36_40 }}</td>
+                                <td>{{ obj.female_36_40 }}</td>
+                            </tr>
+                            <tr>
+                                <td>41歳~45歳</td>
+                                <td>{{ obj.male_41_45 }}</td>
+                                <td>{{ obj.female_41_45 }}</td>
+                            </tr>
+                            <tr>
+                                <td>46歳~50歳</td>
+                                <td>{{ obj.male_46_50 }}</td>
+                                <td>{{ obj.female_46_50 }}</td>
+                            </tr>
+                            <tr>
+                                <td>51歳以上</td>
+                                <td>{{ obj.male_51_over }}</td>
+                                <td>{{ obj.female_51_over }}</td>
+                            </tr>
+                        </table>
+                        <p class="total">【総人数:<span class="total-data">{{ obj.total }}人</span>】</p>
+                    </div>
+                    <div id="gender-ratio-graph{{forloop.counter}}" class="graph gender-ratio-graph"></div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="twitter-area">
+                <h5>Twitter
+                    <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_COMPARE_001"></i>
+                </h5>
+                <div class="graph-left">
+                    <div class="graph-center">
+                        <div class="table-area">
+                            <table id="grid-twitter" style="width:100%"></table>
+                            <div id="pager-twitter"></div>
+                        </div>
+                    </div>
+                    <div class="spacer_8"></div>
+                    <div class="replot-button-area">
+                        <button id="twitter-replot-button" class="button-blue btn-large">
+                            <i class="icon-refresh icon-white"></i>
+                            再描画
+                        </button>
+                    </div>
+                </div>
+                <div class="graph-right">
+                    <div id="twiter-follower-graph" class="graph"></div>
+                </div>
+            </div>
+            <div class="manga-area">
+                <h5>マンガ
+                    <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_COMPARE_001"></i>
+                </h5>
+                <div class="graph-center">
+                    <div class="table-area">
+                        <table id="grid-manga" style="width:100%"></table>
+                        <div id="pager-manga"></div>
+                    </div>
+                </div>
+                <div class="replot-button-area">
+                    <button id="manga-replot-button" class="button-blue btn-large compare-button">
+                        <i class="icon-refresh icon-white"></i>
+                        再描画
+                    </button>
+                </div>
+                <div class="graph-left">
+                    <div id="manga-graph1" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="manga-graph3" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="manga-graph5" class="graph"></div>
+                </div>
+                <div class="graph-right">
+                    <div id="manga-graph2" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="manga-graph4" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="manga-graph6" class="graph"></div>
+                </div>
+            </div>
+            <div class="game-area">
+                <h5>ゲーム
+                    <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_COMPARE_001"></i>
+                </h5>
+                <div class="graph-center">
+                    <div class="table-area">
+                        <table id="grid-game" style="width:100%"></table>
+                        <div id="pager-game"></div>
+                    </div>
+                </div>
+                <div class="replot-button-area" style="font-size: 4rem;">
+                    <button id="game-replot-button" class="button-blue btn-large compare-button">
+                        <i class="icon-refresh icon-white"></i>
+                        再描画
+                    </button>
+                </div>
+                <div class="graph-left">
+                    <div id="game-graph1" class="graph"></div>
+                </div>
+                <div class="graph-right">
+                    <div id="game-graph2" class="graph"></div>
+                </div>
+            </div>
+            <div class="app-area">
+                <h5>アプリ
+                    <i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_COMPARE_001"></i>
+                </h5>
+                <div class="graph-center">
+                    <div class="table-area">
+                        <table id="grid-app" style="width:100%"></table>
+                        <div id="pager-app"></div>
+                    </div>
+                </div>
+                <div class="replot-button-area">
+                    <button id="app-replot-button" class="button-blue btn-large compare-button">
+                        <i class="icon-refresh icon-white"></i>
+                        再描画
+                    </button>
+                </div>
+                <div class="graph-left">
+                    <div id="app-graph-sales1" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="app-graph-sales2" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="app-graph-sales3" class="graph"></div>
+                </div>
+                <div class="graph-right">
+                    <div id="app-graph-download1" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="app-graph-download2" class="graph"></div>
+                    <div class="spacer_16"></div>
+                    <div id="app-graph-download3" class="graph"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% csrf_token %}
+>>>>>>> remotes/origin/feature/ph1.3:web/web-front/ipdds/ipdds_app/templates/ipdds_app/10401_compare.html
+{% endblock %}
