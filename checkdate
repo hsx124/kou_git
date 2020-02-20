@@ -1,0 +1,20 @@
+import re
+
+result = re.match(r"^\d{4}\/\d{2}\/\d{2}$","2019/2/12")
+
+print(result)
+
+ if (!targetValue.match(/^\d{4}\/\d{2}\/\d{2}$/)){
+        result.ret = false;
+        result.msg = (label+ 'はYYYY/MM/DD形式で入力してください。')
+        return result;
+    }
+
+    var date = new Date(targetValue);  
+    if(date.getFullYear() !=  targetValue.split("/")[0] 
+        || date.getMonth() != targetValue.split("/")[1] - 1 
+        || date.getDate() != targetValue.split("/")[2]
+    ){
+        result.ret = false;
+        result.msg = ('不正な日付が入力されています。')
+        return result;
