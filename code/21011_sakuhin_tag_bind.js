@@ -91,6 +91,7 @@ SakuhinTagBindController.prototype.bindEvent = function() {
  */
 SakuhinTagBindController.prototype.searchTitle = function() {
     var self = this;
+    $('.status-msg').remove();
     $('.input-err-msg').remove();
     // 入力チェックエラーの場合、検索を行わない
     if (!InputCheckUtil.checkInputValue('#input-title-name','タイトル名',100)) {
@@ -328,9 +329,12 @@ SakuhinTagBindController.prototype.gridBtnEvent = function(data) {
     var self = this;
     $('.grid-btn-update').on('click', function() {
         var tag_code_list = {};
+        var core_code =[];
         var button = $(this);
         $(data).each(function(i,val){
             if(button.attr('title-code') == val['title_code']){
+                core_code.push(val['core_code1']);
+                core_code.push(val['core_code2']);
                 tag_code_list['tag_code1'] = val['tag_code1'];
                 tag_code_list['tag_code2'] = val['tag_code2'];
                 tag_code_list['tag_code3'] = val['tag_code3'];
@@ -394,11 +398,29 @@ SakuhinTagBindController.prototype.gridBtnEvent = function(data) {
         select_title.attr('tag_map_code',$(this).attr('tag_map_code'));
         select_title.attr('data-category_code',$(this).attr('data-category_code'));
         select_title.attr('title_code',$(this).attr('title-code'));
-       
+
         $('.tag-select-area').slideDown('slow');
         var modal = $('#title-search-dialog');
         modal.dialog('close');
+
+        // コア名設定
+        var options ={};
+        $('#core-1 option').each(function(){
+            options = $(this);
+            if(options.val() == core_code[0]){
+                $(this).attr('selected','selected');
+            }
+        })
+
+        $('#core-2 option').each(function(){
+            options = $(this);
+            if(options.val() == core_code[1]){
+                $(this).attr('selected','selected');
+            }
+        })
         
+        $('#core-1').selectmenu("refresh");
+        $('#core-2').selectmenu("refresh");
     });
 
     $('.title-select-cancel-button').on('click', function() {
@@ -523,7 +545,7 @@ SakuhinTagBindController.prototype.tagDeleteBtn = function(id) {
     
     if (tag_selected.length == 1) {
         tag_selected.remove();
-        $('<li id=""><span>タグ</span></li>').on('click',this.switchTagSelect).appendTo($('#'+ulId));
+        $('<li id=""><span>ダミータグ</span></li>').on('click',this.switchTagSelect).appendTo($('#'+ulId));
     }
 
 }
