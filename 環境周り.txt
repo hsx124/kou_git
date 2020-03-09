@@ -14,3 +14,5 @@ BpJKd7WF
 
 myrecord
 id:ugw383004139
+
+$('#core-1').selectmenu("refresh)
