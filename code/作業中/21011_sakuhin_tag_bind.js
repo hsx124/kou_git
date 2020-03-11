@@ -431,7 +431,7 @@ SakuhinTagBindController.prototype.gridBtnEvent = function(data) {
 SakuhinTagBindController.prototype.makeLiTag = function(ele,metaData,cnt) {
     $(metaData).each(function(i,val){
         if(val['tag_code' + (i + cnt)] == ""|| val['tag_code' + (i + cnt)] == null){
-            ele.append($('<li id="">'+ '<span>タグ'+ (i + cnt) + '</span></li>').on('click',SakuhinTagBindController.prototype.switchTagSelect));
+            ele.append($('<li id="" class="set-tag-btn">'+ '<span>タグを設定できます</span></li>').on('click',SakuhinTagBindController.prototype.switchTagSelect));
         }else{
 
             ele.append($('<li id='+'"'+val['tag_code' + (i + cnt)][0] + '"' + '><span>' +val['tag_code'+ (i + cnt)][1] + '</span></li>').on('click',SakuhinTagBindController.prototype.switchTagSelect));
@@ -507,7 +507,7 @@ SakuhinTagBindController.prototype.tagSettingBtn = function(id) {
 
     // タグボタンの背景色を元に戻す
     tag_list.each(function(){
-        $(this).removeClass('button-pushed');
+        $(this).removeClass('button-pushed').removeClass('set-tag-btn');
     });
 }
 
@@ -518,6 +518,7 @@ SakuhinTagBindController.prototype.addTagToList = function(target_list,tag_list)
     target_list.each(function(i,outVal){
         tag_list.each(function(j,innerVal){
             var $outVal =$(outVal);
+            $(innerVal.children[i]).removeClass('set-tag-btn');
             innerVal.children[i].innerHTML = '<span>' + $outVal.html() + '</span>';
             innerVal.children[i].id = $outVal.attr('sakuhin-tag-code');
         })
@@ -545,7 +546,7 @@ SakuhinTagBindController.prototype.tagDeleteBtn = function(id) {
     
     if (tag_selected.length == 1) {
         tag_selected.remove();
-        $('<li id=""><span>ダミータグ</span></li>').on('click',this.switchTagSelect).appendTo($('#'+ulId));
+        $('<li id="" class="set-tag-btn"><span>タグを設定できます</span></li>').on('click',this.switchTagSelect).appendTo($('#'+ulId));
     }
 
 }
@@ -558,15 +559,19 @@ SakuhinTagBindController.prototype.tagMoveUp = function(id) {
     var ul_selected = $('#' +id + ' .selected');
     var selectedContent = ul_selected.children('span').html();
     var selectedEleId = ul_selected.attr('id');
+    var selectedEleClass = ul_selected.attr('class');
     var prevContent = ul_selected.prev().children('span').html();
     var prev = ul_selected.prev();
     var prevEleId = ul_selected.prev().attr('id');
+    var preEleClass = ul_selected.prev().attr('class');
     if (ul_selected.length == 1) {
         if (prev.length) {
             ul_selected.children('span').html(prevContent);
             ul_selected.attr('id',prevEleId);
+            ul_selected.attr('class',preEleClass);
             prev.children('span').html(selectedContent);
             prev.attr('id',selectedEleId);
+            prev.attr('class',selectedEleClass);
             prev.addClass('selected').siblings().removeClass('selected');
         } 
     } 
@@ -580,15 +585,19 @@ SakuhinTagBindController.prototype.tagMoveDown = function(id) {
     var ul_selected = $('#' +id + ' .selected');
     var selectedContent = ul_selected.children('span').html();
     var selectedEleId = ul_selected.attr('id');
+    var selectedEleClass = ul_selected.attr('class');
     var nextContent = ul_selected.next().children('span').html();
     var next = ul_selected.next();
     var nextEleId = ul_selected.next().attr('id');
+    var nextEleClass = ul_selected.next().attr('class');
     if (ul_selected.length == 1) {
         if (next.length) {
             ul_selected.children('span').html(nextContent);
             ul_selected.attr('id',nextEleId);
+            ul_selected.attr('class',nextEleClass);
             next.children('span').html(selectedContent);
             next.attr('id',selectedEleId);
+            next.attr('class',selectedEleClass);
             next.addClass('selected').siblings().removeClass('selected');
         } 
     } 
@@ -653,7 +662,7 @@ SakuhinTagBindController.prototype.createDummyTag = function() {
     var tag11_20 = $('#tag-11-20'); 
     var dummyTag;
     for(var index = 1; index <= 20;index++){
-        dummyTag = $('<li><span>タグ' + index + '</span></li>').on('click',this.switchTagSelect);
+        dummyTag = $('<li class="set-tag-btn"><span>タグを設定できます</span></li>').on('click',this.switchTagSelect);
         if(index <= 5){
             tag1_5.append(dummyTag);
         }else if(index > 5 && index <= 10){

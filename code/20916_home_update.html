@@ -1,0 +1,163 @@
+{% extends 'admin_app/base/b00_base.html' %}
+
+{% block page_title %}HOME画面 バナー編集{% endblock %}
+
+{% block extra_head %}
+<!-- jQuery -->
+{% include 'admin_app/base/b01_import_jquery.html' %}
+
+<!-- jQuery UploadThumbs -->
+{% include 'admin_app/base/b06_import_uploadthumbs.html' %}
+
+<!-- jqGrid -->
+{% include 'admin_app/base/b02_import_jqgrid.html' %}
+
+<!-- 共通 -->
+{% include 'admin_app/base/b03_import_common.html' %}
+
+<!-- 入力系共通 -->
+{% include 'admin_app/base/b05_import_inpututil.html' %}
+
+<!-- djangoオブジェクト連携 -->
+{% include 'admin_app/base/b99_django_js.html' %}
+
+<!-- 個別 -->
+{% load static %}
+<script src="{% static 'admin_app/javascript/09_home/20916_home_update.js' %}"></script>
+<link rel="stylesheet" href="{% static 'admin_app/css/09_home/20916_home_update.css' %}">
+
+{% endblock %}
+
+{% block content %}
+{% include 'admin_app/base/b09_create_menu.html' %}
+
+<div class="contents">
+    <h4>バナー 編集</h4>
+    <form id="banner-submit" action="{% url 'admin_app:20916_home_update' %}" method="post" enctype="multipart/form-data">
+        <div class="input-area">
+            {% csrf_token %}
+            <input type='hidden' id="position" name="position" value="{{object_to_html.position}}">
+            <table class="input-table">
+                <tbody>
+                    <tr>
+                        <th class="required">タイトル</th>
+                        <td>
+                            {% if object_to_html.errors.banner_title %}
+                            {% for obj in object_to_html.errors.banner_title %}
+                            <div class="input-err-msg">{{obj.message}}</div>
+                            {% endfor %}
+                            {% endif %}
+                            <input id="banner-title" name="banner_title" type="text" class="large" value="{{object_to_html.dto.banner.subject}}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="required">詳細</th>
+                        <td>
+                            {% if object_to_html.errors.banner_detail %}
+                            {% for obj in object_to_html.errors.banner_detail %}
+                            <div class="input-err-msg">{{obj.message}}</div>
+                            {% endfor %}
+                            {% endif %}
+                            <textarea id="banner-detail" name="banner_detail"
+                                class="textarea banner_detail ui-textfield ui-widget ui-widget-content ui-corner-all">{{ object_to_html.dto.banner.details }}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="required">サムネイル</th>
+                        <td>
+                            <div id="key-visual-area">
+                                {% if object_to_html.errors.thumbnail_file_name %}
+                                {% for obj in object_to_html.errors.thumbnail_file_name %}
+                                <div class="input-err-msg">{{obj.message}}</div>
+                                {% endfor %}
+                                {% endif %}
+                                {% if object_to_html.errors.thumbnail %}
+                                {% for obj in object_to_html.errors.thumbnail %}
+                                <div class="input-err-msg">{{obj.message}}</div>
+                                {% endfor %}
+                                {% endif %}
+                                【ファイルサイズは1MB未満】としてください。
+                                <br>
+                                <div id="btn" class="base-button narrow file-select-button">ファイルを選択</div>
+                                <input type="file" id="upload" name="thumbnail" multiple="multiple" />
+                                <input id="uploadname" name="thumbnail_file_name" class="upload-text" placeholder="選択されていません" value="{{ object_to_html.dto.banner.tumbnail_file_name }}" readonly />
+                            </div>
+                            <div id="preview">
+                                <img src="/static/ipdds_app/image/banner/{{ object_to_html.dto.banner.position }}/{{object_to_html.dto.banner.tumbnail_file_name}}" class="uploaded thumb" alt="" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="required">遷移先</th>
+                        <td>
+                            {% if object_to_html.errors.banner_url %}
+                            {% for obj in object_to_html.errors.banner_url %}
+                            <div class="input-err-msg">{{obj.message}}</div>
+                            {% endfor %}
+                            {% endif %}
+                            {% if object_to_html.errors.banner_hakusho %}
+                            {% for obj in object_to_html.errors.banner_hakusho %}
+                            <div class="input-err-msg">{{obj.message}}</div>
+                            {% endfor %}
+                            {% endif %}
+                            <table class="input-table">
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            <label>
+                                                <input id="url-checkbox" name="url_checkbox" class="checkbox" type="checkbox" value="0" checked>
+                                                外部サイト
+                                            </label>
+                                        </th>
+                                        <td class="overlay-td">
+                                            <div id="url-overlay" class="overlay"></div>
+
+                                            <input id="banner-url" name="banner_url" type="text" class="large" value="{{ object_to_html.dto.banner.external_site  | default_if_none:''}}"
+                                                placeholder="URLを入力してください">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <label>
+                                                <input id="hakusho-checkbox" class="checkbox" type="checkbox" value="1">
+                                                白書
+                                            </label>
+                                        </th>
+                                        <td class="overlay-td">
+                                            <div id="hakusho-overlay" class="overlay"></div>
+
+                                            <div class="base-button narrow select-hakusho-button">白書を選択</div><span
+                                                class="hakusho-doc">{{object_to_html.dto.banner.media_report_name | default_if_none:''}}</span>
+                                            <input type="hidden" id="banner-hakusho_num" name="media_report_code" value="{{ object_to_html.dto.banner.media_report_code  | default_if_none:''}}">
+                                            <input type="hidden" id="banner-hakusho" name="banner_hakusho" value="{{ object_to_html.dto.banner.media_report_name  | default_if_none:''}}">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="button-area">
+                <div class="next-button-area">
+                    <div class="save-button base-button next-button">更新</div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div style="display: none">
+    <div id="hakusho-dialog">
+        <div class="dialog-contents">
+            <div id="list">
+                <table id="list-grid"></table>
+                <div id="pager"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+{% endblock %}
