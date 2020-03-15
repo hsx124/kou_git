@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+.input-table {
+    width: 100%;
+}
+
+.getsynopsys-button {
+    margin-bottom: 10px;
+}
+
+.from-to > div {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+#preview > img{
+    max-width: 100%;
+}
+.month table {
+    display: none;
+}
