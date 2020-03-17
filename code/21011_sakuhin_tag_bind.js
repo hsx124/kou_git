@@ -759,4 +759,21 @@ SakuhinTagBindController.prototype.switchTagSelect = function() {
 $(function() {
     var controller = new SakuhinTagBindController();
     controller.init();
+
+    // $(window).scroll(function(){
+    //     var yy = $(this).scrollTop();//获得滚动条top值
+    //     if ($(this).scrollTop() < 200) {
+    //          $(".tag-select-table").css({"position":"absolute",bottom:"930px",right:"0"}); //设置div层定位，要绝对定位
+    //     }else{
+    //          $(".tag-select-table").css({"position":"absolute",top:yy+"px",right:"0"});
+    //     }
+    //  });
+    //var menuYloc = $(".tag-select-table").offset().top;  
+    $(window).scroll(function () {  
+        var offsetTop = $(window).scrollTop() + "px";  
+        if($(this).scrollTop() < 922){
+            offsetTop = '900px'
+        }
+        $(".tag-select-table").animate({ top: offsetTop }, { duration: 600, queue: false });  
+    }); 
 });
