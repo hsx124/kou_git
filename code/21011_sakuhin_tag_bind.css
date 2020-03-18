@@ -132,7 +132,7 @@ ul {
 }
 
 .button-pushed{
-    box-shadow: 0 0 5px 20px #CCC inset;
+    box-shadow: 0 0 5px 20px #f49393 inset;
 }
 
 #list-grid .update-button{
@@ -182,11 +182,24 @@ ul .selected {
 }
 
 .tag-select-bottom .tag-search-button{
-    margin-top:5px;
+    margin: 6px 2px 0 0;
 }
 
 .tag-select-bottom .tag_name{
-    margin-top:10px;
-    width:59%;
-    float:left;
+    margin-top: 10px;
+    width: 58%;
+    float: left;
+}
+
+.tag-select-bottom{
+    margin-top: 8px;
+}
+
+.tag-select-list .jquery-ui-draggable{
+    background: #a7a7a7;
+    color: black;
+}
+
+.tag-select-list .jquery-ui-draggable:hover{
+    background-color: #cecece;
 }

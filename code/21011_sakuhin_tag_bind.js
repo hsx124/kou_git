@@ -133,7 +133,9 @@ SakuhinTagBindController.prototype.CreateTagList = function(result) {
         })
     }
     // タグリスト
-    $('.tag-list-area').append(tagSelectList);
+    if(result.length > 0){
+        $('.tag-list-area').append(tagSelectList);
+    }
 }
 
 /**
@@ -581,6 +583,7 @@ SakuhinTagBindController.prototype.addTagToList = function(target_list,tag_list)
 
         // 設定先が選択されている場合
         if(selectedTag.length > 0){
+            
             selectedTag.removeClass('set-tag-btn');
             selectedTag.html('<span>' + $outVal.html() + '</span>');
             selectedTag.id = $outVal.attr('sakuhin-tag-code');
@@ -760,20 +763,23 @@ $(function() {
     var controller = new SakuhinTagBindController();
     controller.init();
 
-    // $(window).scroll(function(){
-    //     var yy = $(this).scrollTop();//获得滚动条top值
-    //     if ($(this).scrollTop() < 200) {
-    //          $(".tag-select-table").css({"position":"absolute",bottom:"930px",right:"0"}); //设置div层定位，要绝对定位
-    //     }else{
-    //          $(".tag-select-table").css({"position":"absolute",top:yy+"px",right:"0"});
-    //     }
-    //  });
-    //var menuYloc = $(".tag-select-table").offset().top;  
     $(window).scroll(function () {  
-        var offsetTop = $(window).scrollTop() + "px";  
-        if($(this).scrollTop() < 922){
-            offsetTop = '900px'
+        var offsetTop = $(window).scrollTop()-620 + "px";  
+        var scrollTop = $(this).scrollTop();
+
+        if($('.tag-list-area').children().length == 0 || $('.tag-list-area').height() > 1500){
+            return
         }
-        $(".tag-select-table").animate({ top: offsetTop }, { duration: 600, queue: false });  
+        if(scrollTop > 600 && scrollTop < 1200){
+            
+            $(".tag-select-table").animate({ top: offsetTop }, { duration: 600, queue: false });  
+        }
+        if(scrollTop == 0){
+            $(".tag-select-table").css("top",0);
+        }
+
+        if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+            $(".tag-select-table").css("top",$(window).height()+210+'px');
+        }
     }); 
 });
