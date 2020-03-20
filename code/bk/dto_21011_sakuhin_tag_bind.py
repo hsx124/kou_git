@@ -16,11 +16,17 @@ class DtoSakuhinTagBind(NamedTuple):
         # プルダウン：カテゴリマスタの取得
          core_code : str
          core_name : str
+         update_user :str
+         update_time :str
 
     class SakuhinTagCategoryAll(NamedTuple):
         # プルダウン：カテゴリマスタの取得
          sakuhin_tag_category_code : str
          sakuhin_tag_category_name : str
+
+    class SakuhinTagList(NamedTuple):
+        sakuhin_tag_code : str
+        sakuhin_tag_name : str
 
     class TitleSearchModal(NamedTuple):
         # タグ紐づけ編集タイトル検索
@@ -28,7 +34,7 @@ class DtoSakuhinTagBind(NamedTuple):
         title_code : str
         # タイトル名
         title_name : str
-        # タイトルカテゴリ名
+         # タイトルカテゴリ名
         title_category_name : str
         # タイトルカテゴリコード
         title_category_code : str
@@ -42,8 +48,8 @@ class DtoSakuhinTagBind(NamedTuple):
         update_user: str
         # 更新日時
         update_time: str
-        # core_code1 : str
-        # core_code2 : str
+        core_code1 : str
+        core_code2 : str
         tag_code1 : str
         tag_code2 : str
         tag_code3 : str

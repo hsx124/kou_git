@@ -31,7 +31,7 @@ class SakuhinTagBindService(ServiceList):
 
         # 更新履歴
         notice_table = self.getnoticetable(table_name)
-        dto_core = self.mapping(DtoSakuhinTagBind.CoreAll, self.dao_m_core.selectAll())
+        dto_core = self.mapping(DtoSakuhinTagBind.CoreAll, self.dao_m_core.selectCoreList())
         dto_sakuhin_tag_category = self.mapping(DtoSakuhinTagBind.SakuhinTagCategoryAll, self.dao_m_sakuhin_tag_category.selectSakuhinTagCategoryAll())
         # 領域用DTOを画面DTOに詰める
         dto_sakuhin_tag_bind= DtoSakuhinTagBind(notice_table, dto_core, dto_sakuhin_tag_category)
@@ -104,7 +104,7 @@ class SakuhinTagBindService(ServiceList):
             'full_name' : full_name
         }
 
-        if tag_map_code == '':
+        if tag_map_code == '' or tag_map_code == 'null':
             # m_sakuhin_tap_mapに存在するtag_map_codeの最大値を取得
             new_code = self.dao_m_sakuhin_tag_bind.selectMaxTagMapCode()
             # 最大値+1を0埋めする（新規tag_map_code）
@@ -117,8 +117,14 @@ class SakuhinTagBindService(ServiceList):
             # (変更テーブル名,操作内容,変更対象,備考,更新者)を設定
             entity = ('m_sakuhin_tag_map','追加',param['title_name'],'',full_name)
             self.dao_t_update_history.insert(entity)
+            return 'create'
 
         else:
             entity = ('m_sakuhin_tag_map','編集',param['title_name'],'',full_name)
             self.dao_t_update_history.insert(entity)
             self.dao_m_sakuhin_tag_bind.update(param_list)
+            return 'update'
+
+    def getSakuhinTag(self,tag_name):
+        dto_tag = self.mapping(DtoSakuhinTagBind.SakuhinTagList,self.dao_m_sakuhin_tag_bind.selectSakuhinTagByName(tag_name))
+        return self.unpack(dto_tag)

@@ -99,6 +99,12 @@ class SakuhinTagBindView(ListView):
                         
                 dto = categoryInfo
         
+        if 'tag_like_search' in request.GET:
+            
+            tag_name = request.GET.get('tag_name')
+            param = {'tag_name' : '%' + tag_name + '%'}
+            dto = self.sakuhinTagBindService.getSakuhinTag(param)
+
         # 非同期処理
         json.dumps(dto, default=self.json_serial)
         return JsonResponse(dto, safe=False)
@@ -108,8 +114,13 @@ class SakuhinTagBindView(ListView):
         param = request.POST
         dto=json.loads(param['param'])
         user_name = request.user.get_full_name()
-        self.sakuhinTagBindService.createInsertOrUpdateData(dto,user_name)
-        
+        status = self.sakuhinTagBindService.createInsertOrUpdateData(dto,user_name)
+
+         # セッションを保存
+        request.session['show_msg'] = {
+            'targetname' : dto['title_name'],
+            'status' : status
+        }
         # json.dumps(dto, default=self.json_serial)
         # return JsonResponse(dto, safe=False)
         

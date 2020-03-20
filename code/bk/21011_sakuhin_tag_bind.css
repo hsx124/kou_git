@@ -137,6 +137,7 @@ ul {
 
 #list-grid .update-button{
     padding:5px 12px;
+    border-radius: 5px;
 }
 ul .selected {
 	background:#eee;
@@ -177,4 +178,15 @@ ul .selected {
 
 .set-tag-btn{
     border: #333333 dotted 2px;
+    background: #E5EEF6;
+}
+
+.tag-select-bottom .tag-search-button{
+    margin-top:5px;
+}
+
+.tag-select-bottom .tag_name{
+    margin-top:10px;
+    width:59%;
+    float:left;
 }
