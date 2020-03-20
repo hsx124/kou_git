@@ -1,0 +1,156 @@
+{% extends 'admin_app/base/b00_base.html' %}
+
+{% block page_title %}Twitter情報 編集{% endblock %}
+
+{% block extra_head %}
+<!-- jQuery -->
+{% include 'admin_app/base/b01_import_jquery.html' %}
+
+<!-- jqGrid -->
+{% include 'admin_app/base/b02_import_jqgrid.html' %}
+
+<!-- 共通 -->
+{% include 'admin_app/base/b03_import_common.html' %}
+
+<!-- ツールチップ -->
+{% include 'admin_app/base/b16_create_tooltip.html' %}
+
+<!-- 入力系共通 -->
+{% include 'admin_app/base/b05_import_inpututil.html' %}
+
+<!-- djangoオブジェクト連携 -->
+{% include 'admin_app/base/b99_django_js.html' %}
+
+<!-- 個別 -->
+{% load static %}
+<script src="{% static 'admin_app/javascript/07_twitter/20713_twitter_update.js' %}"></script>
+<link rel="stylesheet" href="{% static 'admin_app/css/07_twitter/20713_twitter_update.css' %}">
+</head>
+{% endblock %}
+
+{% block content %}
+{% include 'admin_app/base/b09_create_menu.html' %}
+
+<div class="contents">
+    {% if object_to_html.insert_error %}
+    <div class="status-msg submit-error-msg">同一ユーザー名で既にTwitterアカウントが登録されているため、編集を行うことが出来ませんでした。</div>
+    {% endif %}
+    <h4>Twitter情報 編集</h4>
+    <form action="{% url 'admin_app:20713_twitter_update' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="input-area">
+            <div class="button-area">
+                <div class="back-button-area button-top-area">
+                    <div class="base-button blue back-button">一覧に戻る</div>
+                </div>
+            </div>
+            <table class="input-table">
+                <tbody>
+                    <tr>
+                        <th>検索<i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_TWITTER_003"></i>
+                        </th>
+                        <td>
+                            <input type="text" class="small" value="" id="user-name-search" />
+                            <div class="twitter-button base-button blue narrow"><a id="twitter-search" class="twitter-link" href="https://twitter.com/search?q=検索&f=user" target="_blank"><i
+                                        class="fab fa-twitter"></i>検索</a></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="input-area">
+            <table class="input-table">
+                <tbody>
+                    <tr>
+                        <th class="required">Twitterコード</th>
+                        <td>
+                            {% if object_to_html.errors.twitter_code %}
+                            {% for obj in object_to_html.errors.twitter_code %}
+                            <div class="input-err-msg">{{obj.message}}</div>
+                            {% endfor %}
+                            {% endif %}
+                            <input type="text" class="small input-disabled" readonly value="{{ object_to_html.form.twitter_code }}" name="twitter_code" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="required">ユーザー名<i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_TWITTER_002"></i></th>
+                        <td>
+                            {% if object_to_html.errors.user_name %}
+                            {% for obj in object_to_html.errors.user_name %}
+                            <div class="input-err-msg">{{obj.message}}</div>
+                            {% endfor %}
+                            {% endif %}
+                            <span class="atmark">@</span><input type="text" class="twitter" maxlength=" 15" value="{{ object_to_html.form.user_name | default_if_none:''}}" id="user-name"
+                                name="user_name" />
+                            <div class="twitter-button base-button blue narrow"><a id="twitter-link" class="twitter-link"
+                                    href="https://twitter.com/{{ object_to_html.form.user_name | default_if_none:''}}" target="_blank"><i class="fab fa-twitter"></i>確認</a></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="required">アカウント名</th>
+                        <td>
+                            {% if object_to_html.errors.account_name %}
+                            {% for obj in object_to_html.errors.account_name %}
+                            <div class="input-err-msg">{{obj.message}}</div>
+                            {% endfor %}
+                            {% endif %}
+                            【50文字以内】で入力してください。
+                            <br>
+                            <input type="text" class="large" maxlength="50" value="{{ object_to_html.form.account_name | default_if_none:''}}" name="account_name" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="required">アカウント種別<i class="icon small-icon fas fa-info-circle" data-tooltip data-id="TOOLTIP_TWITTER_001"></i>
+                        </th>
+                        <td>
+                            {% if object_to_html.errors.main_account %}
+                            {% for obj in object_to_html.errors.main_account %}
+                            <div class="input-err-msg">{{obj.message}}</div>
+                            {% endfor %}
+                            {% endif %}
+                            {% ifequal object_to_html.form.main_account_flg False %}
+                            <label><input type="radio" name="main_account_flg" value="true">メインアカウント</label>
+                            <label><input type="radio" name="main_account_flg" value="false" checked="checked">サブアカウント</label>
+                            {% else %}
+                            <label><input type="radio" name="main_account_flg" value="true" checked="checked">メインアカウント</label>
+                            <label><input type="radio" name="main_account_flg" value="false">サブアカウント</label>
+                            {% endifequal %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="button-area">
+                <div class="next-button-area">
+                    <input type="submit" value="保存" class="save-button base-button next-button" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- start 紐づけ解除ダイアログ -->
+<div style="display: none">
+    <div id="delete-confirm-dialog" title="ツイッターコード紐づけ解除確認">
+        以下のツイッターコードを紐づけ解除してよろしいですか？
+        <div class="spacer-8"></div>
+        <table class="delete-confirm-table">
+            <tr>
+                <td class="label">ツイッターコード</td>
+                <td class="value" id="unlock-twitter-code"></td>
+            </tr>
+            <tr>
+                <td class="label">アカウント名</td>
+                <td class="value" id="unlock-account-name"></td>
+            </tr>
+        </table>
+        {% csrf_token %}
+        <div class="dialog-button-area">
+            <div class="spacer-8"></div>
+            <input type="hidden" id="sakuhin-map-id" name="delete-name" value="">
+            <button type="button" class="dialog-button cancel-botton">キャンセル</button>
+            <button class="dialog-button unlock-button" sakuhin-map-id>紐づけ解除</button>
+        </div>
+    </div>
+</div>
+<!-- end 紐づけ解除ダイアログ -->
+{% endblock %}
