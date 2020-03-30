@@ -10,8 +10,10 @@ class DaoMTagBind(DaoMain):
                     , manga.manga_title_name
                     , 'マンガ' AS category_name
                     , '01' AS category_code
-                    , manga.update_user
-                    , manga.update_time
+                    , mp.update_user
+                    , mp.update_time
+                    , mp.core_code1
+                    , mp.core_code2
                     , mp.sakuhin_tag_code1
                     , mp.sakuhin_tag_code2
                     , mp.sakuhin_tag_code3
@@ -32,14 +34,20 @@ class DaoMTagBind(DaoMain):
                     , mp.sakuhin_tag_code18
                     , mp.sakuhin_tag_code19
                     , mp.sakuhin_tag_code20
-                    , manga.tag_map_code
-                from
-                    m_manga_title manga 
+                    , manga.tag_map_code 
+                    from
+                        m_manga_title manga 
                     left join m_sakuhin_tag_map mp 
                         on mp.tag_map_code = manga.tag_map_code 
-                        and manga.invalid_flg = false 
+                        and mp.invalid_flg = false
+                    left join m_sakuhin_map sm 
+                        on sm.title_code = manga.manga_title_code 
+                        and sm.invalid_flg = false
                 where
                     manga_title_name LIKE %(title_name)s
+                    and manga.invalid_flg = false 
+                order by mp.update_time DESC
+                , manga.manga_title_code ASC
         """
         return self.selectWithParam(sql, param)
 
@@ -59,13 +67,15 @@ class DaoMTagBind(DaoMain):
 
     def selectNovelTagByTitleName(self, param):
         sql = """
-               select
+                select
                     novel.novel_title_code
                     , novel.novel_title_name
                     , '小説' AS category_name
                     , '02' AS category_code
-                    , novel.update_user
-                    , novel.update_time
+                    , mp.update_user
+                    , mp.update_time
+                    , mp.core_code1
+                    , mp.core_code2
                     , mp.sakuhin_tag_code1
                     , mp.sakuhin_tag_code2
                     , mp.sakuhin_tag_code3
@@ -89,23 +99,35 @@ class DaoMTagBind(DaoMain):
                     , novel.tag_map_code 
                 from
                     m_novel_title novel 
-                    left join m_sakuhin_tag_map mp 
-                        on mp.tag_map_code = novel.tag_map_code 
-                        and novel.invalid_flg = false 
+                left join m_sakuhin_tag_map mp 
+                    on mp.tag_map_code = novel.tag_map_code 
+                    and mp.invalid_flg = false
+                left join m_sakuhin_map sm 
+                    on sm.title_code = novel.novel_title_code 
+                    and sm.invalid_flg = false
+                left join m_title_category category 
+                    on sm.title_category_code = category.title_category_code 
+                    and category.invalid_flg = false
                 where
                     novel_title_name LIKE %(title_name)s
+                    and novel.invalid_flg = false 
+                ORDER BY 
+                    mp.update_time DESC
+                    , novel.novel_title_code ASC
         """
         return self.selectWithParam(sql, param)
 
     def selectAnimeTagByTitleName(self, param):
         sql = """
-            select
+                select
                     anime.anime_title_code
                     , anime.anime_title_name
                     , 'アニメ' AS category_name
                     , '03' AS category_code
-                    , anime.update_user
-                    , anime.update_time
+                    , mp.update_user
+                    , mp.update_time
+                    , mp.core_code1
+                    , mp.core_code2
                     , mp.sakuhin_tag_code1
                     , mp.sakuhin_tag_code2
                     , mp.sakuhin_tag_code3
@@ -129,11 +151,21 @@ class DaoMTagBind(DaoMain):
                     , anime.tag_map_code 
                 from
                     m_anime_title anime 
-                    left join m_sakuhin_tag_map mp 
-                        on mp.tag_map_code = anime.tag_map_code 
-                        and anime.invalid_flg = false 
+                left join m_sakuhin_tag_map mp 
+                    on mp.tag_map_code = anime.tag_map_code 
+                    and mp.invalid_flg = false
+                left join m_sakuhin_map sm 
+                    on sm.title_code = anime.anime_title_code 
+                    and sm.invalid_flg = false
+                left join m_title_category category 
+                    on sm.title_category_code = category.title_category_code 
+                    and category.invalid_flg = false
                 where
                     anime_title_name LIKE %(title_name)s
+                    and anime.invalid_flg = false 
+                ORDER BY 
+                    mp.update_time DESC
+                    , anime.anime_title_code ASC
             """
         return self.selectWithParam(sql, param)
     def insert(self,param):
@@ -250,14 +282,17 @@ class DaoMTagBind(DaoMain):
         return self.select(sql)[0][0]
 
     def updateTagCodeByTitleCode(self,param_list):
-        tb_name = "01"
+        tb_name = '01'
+        title_code = 'manga_title_code'
         if param_list['title_category_code'] == '01':
             tb_name = 'm_manga_title'
+            title_code = 'manga_title_code'
         elif param_list['title_category_code'] == '02':
             tb_name = 'm_novel_title'
+            title_code = 'novel_title_code'
         else:
             tb_name = 'm_anime_title'
-
+            title_code = 'anime_title_code'
         param = {
             'title_code': param_list['title_code'],
             'tap_map_code': param_list['tag_map_code'],
@@ -271,8 +306,21 @@ class DaoMTagBind(DaoMain):
                     ,update_user = %(full_name)s
                     ,update_time = now()
                 where
-                    manga_title_code = %(title_code)s
+                    {} = %(title_code)s
 
                 """
-        sql = sql.format(tb_name)
+        sql = sql.format(tb_name,title_code)
         return self.updateWithParam(sql,param)
+
+    def selectSakuhinTagByName(self,param):
+        sql =   """
+                select
+                    sakuhin_tag_code
+                    , sakuhin_tag_name 
+                from
+                    m_sakuhin_tag 
+                where
+                    sakuhin_tag_name like %(tag_name)s 
+                    and invalid_flg = false
+                """
+        return self.selectWithParam(sql, param)

@@ -79,12 +79,62 @@ SakuhinTagBindController.prototype.bindEvent = function() {
         self.selectTagArea();
     });
 
+    // タグ名より該当タグを取得
+    $('.tag-search-button').on('click',function(){
+        var tag_name = $('.tag_name').val();
+        self.likeSearchTag(tag_name);
+    })
+
     // タグ保存ボタンのクリックイベント
     $('.tag-save-button').on('click', function() {
         self.saveTagBtn();
     });
     return $.Deferred().resolve().promise();
 };
+
+/**
+ * カテゴリーマスタ検索
+ */
+SakuhinTagBindController.prototype.likeSearchTag = function(tag_name) {
+    var self = this;
+    var param ={
+        'tag_like_search':'tag_like_search',
+        'tag_name':tag_name
+    }
+
+    AjaxUtil.get('/admin_app/sakuhin_tag_bind/', param).then(function(xhr, status){
+        // ajax実行成功する場合、カテゴリー名を表示する
+        if(status == 'success'){
+            // データを取得
+            var result = JSON.parse(xhr.responseText);
+            // タグ選択要素生成
+            $('.tag-list-area')
+                .children()
+                .remove();
+
+            self.CreateTagList(result);
+        }
+    });
+
+}
+
+SakuhinTagBindController.prototype.CreateTagList = function(result) {
+    var tagSelectList = $('<ul class="tag-select-list"></ul>');
+    if (result) {
+        $(result).each(function(i,val){
+            var tag_name = val['sakuhin_tag_name'];
+            var tagElem = $('<li class="jquery-ui-draggable" sakuhin-tag-code =' +val['sakuhin_tag_code'] + '>' + tag_name + '</li>');
+
+            tagElem.on('click',function(){
+                $(this).toggleClass('button-pushed');
+                
+            })
+            tagSelectList.append(tagElem);
+        })
+    }
+    // タグリスト
+    $('.tag-list-area').append(tagSelectList);
+}
 
 /**
  * タイトル検索
@@ -226,21 +276,7 @@ SakuhinTagBindController.prototype.selectTagArea = function() {
                 .children()
                 .remove();
 
-            var tagSelectList = $('<ul class="tag-select-list"></ul>');
-            if (result) {
-                $(result).each(function(i,val){
-                    var tag_name = val['sakuhin_tag_name'];
-                    var tagElem = $('<li class="jquery-ui-draggable" sakuhin-tag-code =' +val['sakuhin_tag_code'] + '>' + tag_name + '</li>');
-
-                    tagElem.on('click',function(){
-                        $(this).toggleClass('button-pushed');
-                        
-                    })
-                    tagSelectList.append(tagElem);
-                })
-            }
-            // タグリスト
-            $('.tag-list-area').append(tagSelectList);
+            self.CreateTagList(result);
 
             // ドラッグ付与
             // self.setDragEvent('.jquery-ui-draggable');
@@ -723,4 +759,21 @@ SakuhinTagBindController.prototype.switchTagSelect = function() {
 $(function() {
     var controller = new SakuhinTagBindController();
     controller.init();
+
+    // $(window).scroll(function(){
+    //     var yy = $(this).scrollTop();//获得滚动条top值
+    //     if ($(this).scrollTop() < 200) {
+    //          $(".tag-select-table").css({"position":"absolute",bottom:"930px",right:"0"}); //设置div层定位，要绝对定位
+    //     }else{
+    //          $(".tag-select-table").css({"position":"absolute",top:yy+"px",right:"0"});
+    //     }
+    //  });
+    //var menuYloc = $(".tag-select-table").offset().top;  
+    $(window).scroll(function () {  
+        var offsetTop = $(window).scrollTop() + "px";  
+        if($(this).scrollTop() < 922){
+            offsetTop = '900px'
+        }
+        $(".tag-select-table").animate({ top: offsetTop }, { duration: 600, queue: false });  
+    }); 
 });
