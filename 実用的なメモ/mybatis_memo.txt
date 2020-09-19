@@ -578,6 +578,53 @@ public class Dept {
 	private List<Emp> emps;
 }
  
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+开启二级缓存
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="db_info.properties" />
+	<settings>
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="aggressiveLazyLoading" value="false" />
+		<setting name="logImpl" value="STDOUT_LOGGING" />
+		<setting name="cacheEnabled" value="true"/>开启二级缓存　默认为true--
+	</settings>
+	<typeAliases>
+		<package name="cn.hsx124.bean" />
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="jdbc" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.user}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="emp.xml" />
+		<package name="cn.hsx124.mapper" />
+	</mappers>
+</configuration>
+
+禁止二级缓存
+<select id="selectEmp" resultMap="rtmap" useCache="false">
+		select
+		dept.*,emp.empno,emp.ename,emp.sal from dept ,emp where
+		dept.deptno=emp.deptno
+</select>
+
+
+
+
+
+
+
+
+
 
  
  

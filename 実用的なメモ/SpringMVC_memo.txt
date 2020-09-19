@@ -1,0 +1,338 @@
+SpringMVC环境配置（Maven）
+导入Maven依赖
+Pom.xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cn.hsx124.springmvc</groupId>
+	<artifactId>springMVCDemo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<properties>
+		<java-version>1.8</java-version>
+		<encoding>utf-8</encoding>
+	</properties>
+	<!-- 配置JDK版本 -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+					<encoding>${encoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>5.0.2.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>5.0.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>5.0.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.9.1</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<!-- <scope>test</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>3.0-alpha-1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>
+
+Web.xml
+配置Spring核心控制器
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>springMVCDemo</display-name>
+	<welcome-file-list>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<!-- 配置Spring核心控制器 -->
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 配置servlet初始化参数，告知servlet,Springmvc的配置文件位置 -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc.xml</param-value>
+		</init-param>
+		<!-- 配置Servlet启动顺序 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+</web-app>
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@RequstMapping请求映射：浏览器请求url保持一致。
+写在方法上：和请求url进行绑定
+写在类上：给访问url进行窄化处理，可以让url变成模块化形式。
+Springmvc.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<!-- 配置要扫描的包 -->
+	<context:component-scan base-package="cn.hsx124.controller"></context:component-scan>
+	<!-- 配置Springmvc的视图解析器 -->
+	<bean id="view" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- prefix前缀表示要去哪里查找页面资源 返回值都页面的前缀保持一致-->
+		<property name="prefix" value="/WEB-INF/pages/"></property>
+		<!-- suffix后缀表示查找什么类型 -->
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+</beans>
+
+DemoController.java
+@Controller//把当前类交于Spring管理
+public class DemoController {
+	@RequestMapping("/demo")
+	public String demo(){
+		System.out.println("demo is running ...");
+		return "success";//返回值与页面前缀一致
+	}
+}
+
+@Controller
+@RequestMapping("/test")
+public class DemoController {
+
+	@RequestMapping("/demo")
+	public String demo(){
+		System.out.println("demo is running ...");
+		return "success";
+	}
+}
+
+<a href="${pageContext.request.contextPath }/test/demo">dddd</a>
+
+@RequstMapping
+属性:
+	value用于指定访问url和执行的方法之间的对应关系
+	method用于限定请求的方式 如post,get等。
+	params:用于指定请求url必须的参数要求
+	headers:用于指定请求消息头的信息
+	以上属性两个以上存在时，是并列关系
+	
+@Controller
+@RequestMapping("/test")
+public class DemoController {
+
+	@RequestMapping("/demo")
+	public String demo() {
+		System.out.println("demo is running ...");
+		return "success";
+	}
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String save() {
+		System.out.println(this.getClass().getSimpleName() + "....");
+		return "success";
+	}
+}	
+
+<body>
+	<a href="${pageContext.request.contextPath }/test/demo">dddd</a>
+	<form action="test/save" method="get">
+		<input type="submit" value="submit"/>
+	</form>
+</body>
+
+
+<body>
+	<a href="test/update?money=150">params</a>
+</body>
+
+@Controller
+@RequestMapping("/test")
+public class DemoController {
+	@RequestMapping(value="/update",params="money=150")
+	public String update() {
+		System.out.println(this.getClass().getName() + "....");
+		return "success";
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+请求参数绑定
+基本类型
+<body>
+	<a href="${pageContext.request.contextPath }/test/findById?id=7">find</a>
+</body>
+
+@Controller
+@RequestMapping("/test")
+public class DemoController {
+	@RequestMapping("/findById")
+	public String find(Integer id) {//请求参数名必须与方法参数名一致
+		System.out.println("find id ;" + id);
+		return "success";
+	}
+}
+
+POJO类型
+<body>
+	<form action="${pageContext.request.contextPath}/test/find" method="post">
+		id:<input type="text" name="id"/><br/>
+		name:<input type="text" name="name"/><br/>
+		money:<input type="text" name="money"/><br/>
+		<input type="submit" value="submit"/>
+	</form>
+</body>
+
+@Controller
+@RequestMapping("/test")
+public class DemoController {
+	@RequestMapping("/find")
+	public String find(Account account) {
+		System.out.println(account);
+		return "success";
+	}
+}
+
+public class Account {
+	private Integer id;
+	private String name;
+	private Double money;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Double getMoney() {
+		return money;
+	}
+	public void setMoney(Double money) {
+		this.money = money;
+	}
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", name=" + name + ", money=" + money + "]";
+	}
+}
+Pojo类型中有其他的POJO类型
+<body>
+	<form action="${pageContext.request.contextPath}/test/find" method="post">
+		id:<input type="text" name="id"/><br/>
+		name:<input type="text" name="name"/><br/>
+		money:<input type="text" name="money"/><br/>
+		provinceName:<input type="text" name="address.provinceName"/><br/>
+		cityName:<input type="text" name="address.cityName"/><br/>
+		<input type="submit" value="submit"/>
+	</form>
+</body>
+
+@Controller
+@RequestMapping("/test")
+public class DemoController {
+	@RequestMapping("/find")
+	public String find(Account account) {
+		System.out.println(account);
+		return "success";
+	}
+}
+
+配置Spring内置过滤器
+web.xml
+<!-- 配置SpringMVC编码过滤器 -->
+<filter>
+	<filter-name>CharacterEncodingFilter</filter-name>
+	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+	<!-- 配置过滤中的属性值 -->
+	<init-param>
+		<param-name>encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</init-param>
+	<!-- 启动过滤器 -->
+	<init-param>
+		<param-name>forceEncoding</param-name>
+		<param-value>true</param-value>
+	</init-param>
+</filter>
+<filter-mapping>
+	<filter-name>CharacterEncodingFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+
+springmvc.xml
+设置静态资源不过滤
+<mvc:resources location="/css/" mapping="/css/*"></mvc:resources>
+<mvc:resources location="/img/" mapping="/img/*"></mvc:resources>
+<mvc:resources location="/javascript/" mapping="/javascript/*"></mvc:resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
