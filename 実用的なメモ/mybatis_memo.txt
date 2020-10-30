@@ -612,9 +612,9 @@ public class Dept {
 
 禁止二级缓存
 <select id="selectEmp" resultMap="rtmap" useCache="false">
-		select
-		dept.*,emp.empno,emp.ename,emp.sal from dept ,emp where
-		dept.deptno=emp.deptno
+	select
+	dept.*,emp.empno,emp.ename,emp.sal from dept ,emp where
+	dept.deptno=emp.deptno
 </select>
 
 

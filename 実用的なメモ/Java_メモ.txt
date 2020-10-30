@@ -1,29 +1,53 @@
-ñæCJava’†“IgetResourceAsStream?æ?–Ú‰º“Iw’è?Œ¹—LˆÈ‰º™{?F?
+é¦–å…ˆï¼ŒJavaä¸­çš„getResourceAsStream?å–?ç›®ä¸‹çš„æŒ‡å®š?æºæœ‰ä»¥ä¸‹å‡ ?ï¼š?
 
-ˆêF?æsrc‰º“Iw’è?Œ¹
+ä¸€ï¼š?å–srcä¸‹çš„æŒ‡å®š?æº
 
-????1)A Class.getResourceAsStream(String path) F path •sˆÈf/'???àÒ?¥˜¸Ÿ?Šİ“I•ï‰ºæ?Œ¹CˆÈf/'???¥˜¸ClassPathª‰º(‘¦'/'‘ã•\src)?æB‘´‘ü¥’Ê?path?‘¢ˆê˜¢??˜HŒaCÅ??¥—RClassLoader?æ?Œ¹B
+????1)ã€ Class.getResourceAsStream(String path) ï¼š path ä¸ä»¥â€™/'???é»˜?æ˜¯ä»æ­¤?æ‰€åœ¨çš„åŒ…ä¸‹å–?æºï¼Œä»¥â€™/'???æ˜¯ä»ClassPathæ ¹ä¸‹(å³'/'ä»£è¡¨src)?å–ã€‚å…¶åªæ˜¯é€š?path?é€ ä¸€ä¸ª??è·¯å¾„ï¼Œæœ€??æ˜¯ç”±ClassLoader?å–?æºã€‚
 
-? ? ? ? ? ? —áF
+? ? ? ? ? ? ä¾‹ï¼š
 
-? ? ? ? ? ? ? ? ? ? A)Aİ“¯?–Ú?‰ºFcom.x.y ‰º—L?me.class ,“¯?İ“¯?–Ú?‰º—L?Œ¹•¶Œmyfile.xml,??g—pFme.class.getResourceAsStream("myfile.xml");
+? ? ? ? ? ? ? ? ? ? A)ã€åœ¨åŒ?ç›®?ä¸‹ï¼šcom.x.y ä¸‹æœ‰?me.class ,åŒ?åœ¨åŒ?ç›®?ä¸‹æœ‰?æºæ–‡ä»¶myfile.xml,??ä½¿ç”¨ï¼šme.class.getResourceAsStream("myfile.xml");
 
-? ? ? ? ? ? ? ? ? ? B)Aİq–Ú?‰ºF—á”@Fcom.x.y ‰º—L?me.class ,“¯?İ com.x.y.file –Ú?‰º—L?Œ¹•¶Œmyfile.xmlC???g—pme.class.getResourceAsStream("file/myfile.xml");
+? ? ? ? ? ? ? ? ? ? B)ã€åœ¨å­ç›®?ä¸‹ï¼šä¾‹å¦‚ï¼šcom.x.y ä¸‹æœ‰?me.class ,åŒ?åœ¨ com.x.y.file ç›®?ä¸‹æœ‰?æºæ–‡ä»¶myfile.xmlï¼Œ???ä½¿ç”¨me.class.getResourceAsStream("file/myfile.xml");
 
-????2)A Class.getClassLoader.getResourceAsStream(String path) FàÒ??¥˜¸ClassPathª‰º?æCpath•s”\ˆÈf/'??CÅ?¥—RClassLoader?æ?Œ¹B
+????2)ã€ Class.getClassLoader.getResourceAsStream(String path) ï¼šé»˜??æ˜¯ä»ClassPathæ ¹ä¸‹?å–ï¼Œpathä¸èƒ½ä»¥â€™/'??ï¼Œæœ€?æ˜¯ç”±ClassLoader?å–?æºã€‚
 
-? ? ? ? ? ? —áF
+? ? ? ? ? ? ä¾‹ï¼š
 
-? ? ? ? ? ? ? ? ? ?A)A •sİ“¯?–Ú?‰ºC–ç•sİq–Ú?‰ºF—á”@Fcom.x.y ‰º—L?me.class ,“¯?İ com.x.file –Ú?‰º—L?Œ¹•¶Œmyfile.xmlC???g—p:me.class.getClassLoader.getResourceAsStream("com/x/file/myfile.xml");
+? ? ? ? ? ? ? ? ? ?A)ã€ ä¸åœ¨åŒ?ç›®?ä¸‹ï¼Œä¹Ÿä¸åœ¨å­ç›®?ä¸‹ï¼šä¾‹å¦‚ï¼šcom.x.y ä¸‹æœ‰?me.class ,åŒ?åœ¨ com.x.file ç›®?ä¸‹æœ‰?æºæ–‡ä»¶myfile.xmlï¼Œ???ä½¿ç”¨:me.class.getClassLoader.getResourceAsStream("com/x/file/myfile.xml");
 
-“ñ:?æweb?–Ú‰º“Iw’è?Œ¹
+äºŒ:?å–web?ç›®ä¸‹çš„æŒ‡å®š?æº
 
-????1)A ServletContext. getResourceAsStream(String path)FàÒ?˜¸WebAPPª–Ú?(‘¦:—v?•zİ•?Ší‰º“I?–Ú“Iª–Ú?(—^src“¯?“Iweb•¶Œ?‰º))‰ºæ?Œ¹Cpath¥”ÛˆÈf/'??ÙŠ?;
+????1)ã€ ServletContext. getResourceAsStream(String path)ï¼šé»˜?ä»WebAPPæ ¹ç›®?(å³:è¦?å¸ƒåœ¨æœ?å™¨ä¸‹çš„?ç›®çš„æ ¹ç›®?(ä¸srcåŒ?çš„webæ–‡ä»¶?ä¸‹))ä¸‹å–?æºï¼Œpathæ˜¯å¦ä»¥â€™/'??æ— æ‰€?;
 
-? ? ? ? ? ?—áF
+? ? ? ? ? ?ä¾‹ï¼š
 
-? ? ? ? ? ? ? ? A)Aİweb?–Ú“Iª–Ú?‰º—Lmyfile.xml•¶Œ,???g—p:
+? ? ? ? ? ? ? ? A)ã€åœ¨web?ç›®çš„æ ¹ç›®?ä¸‹æœ‰myfile.xmlæ–‡ä»¶,???ä½¿ç”¨:
 
 getServleContext().getResourceAsStream("myfile.xml");
 
-????2)AJsp‰º“Iapplication“à’u?ÛA¥ã–Ê“IServletContext“Iˆê???B
+????2)ã€Jspä¸‹çš„applicationå†…ç½®?è±¡å°±æ˜¯ä¸Šé¢çš„ServletContextçš„ä¸€???ã€‚
+
+ä½¿ç”¨dom4jæ”¯æŒxpathçš„æ“ä½œçš„å‡ ?ä¸»è¦å½¢å¼
+
+   ã€€ã€€ç¬¬ä¸€?å½¢å¼
+        ã€€ã€€ã€€ã€€/AAA/DDD/BBBï¼š è¡¨ç¤ºä¸€?ä¸€?çš„ï¼ŒAAAä¸‹é¢ DDDä¸‹é¢çš„BBB
+    ã€€  ç¬¬äºŒ?å½¢å¼
+       ã€€ã€€ã€€ã€€ //BBBï¼š è¡¨ç¤ºå’Œ?ä¸ªåç§°ç›¸åŒï¼Œè¡¨ç¤ºåªè¦åç§°æ˜¯BBBï¼Œéƒ½å¾—åˆ°
+         ç¬¬ä¸‰?å½¢å¼
+        ã€€ã€€ã€€ã€€/*: æ‰€æœ‰å…ƒç´ 
+         ç¬¬å››?å½¢å¼
+       ã€€ã€€ã€€ã€€BBB[1]ï¼šã€€è¡¨ç¤ºç¬¬ä¸€ä¸ªBBBå…ƒç´ 
+        ã€€  ã€€ã€€BBB[last()]ï¼šè¡¨ç¤ºæœ€åä¸€ä¸ªBBBå…ƒç´ 
+         ç¬¬äº”?å½¢å¼
+        ã€€ã€€ã€€ã€€//BBB[@id]ï¼š è¡¨ç¤ºåªè¦BBBå…ƒç´ ä¸Šé¢æœ‰idå±æ€§ï¼Œéƒ½å¾—åˆ°
+         ç¬¬å…­?å½¢å¼
+        ã€€ã€€ã€€ã€€//BBB[@id='b1'] è¡¨ç¤ºå…ƒç´ åç§°æ˜¯BBB,åœ¨BBBä¸Šé¢æœ‰idå±æ€§ï¼Œå¹¶ä¸”idçš„å±æ€§?æ˜¯b1
+
+ä½¿ç”¨dom4jæ”¯æŒxpathå…·ä½“æ“ä½œ
+         é»˜?çš„æƒ…å†µä¸‹ï¼Œdom4jä¸æ”¯æŒxpathï¼Œå¦‚æœæƒ³è¦åœ¨dom4jé‡Œé¢æ˜¯æœ‰xpathï¼Œç¬¬ä¸€?éœ€è¦ï¼Œå¼•å…¥æ”¯æŒxpathçš„jaråŒ…ï¼Œå¦‚ä¸‹ï¼š
+
+       
+         åœ¨dom4jé‡Œé¢æä¾›äº†?ä¸ªæ–¹æ³•ï¼Œç”¨æ¥æ”¯æŒxpath
+       ã€€ã€€ã€€ã€€selectNodes("xpathè¡¨?å¼")ï¼Œ?å–å¤šä¸ª?ç‚¹
+ã€€ã€€ã€€ã€€ã€€ã€€ selectSingleNode("xpathè¡¨?å¼")ï¼Œ?å–ä¸€ä¸ª?ç‚¹
