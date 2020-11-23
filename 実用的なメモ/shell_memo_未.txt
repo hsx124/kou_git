@@ -84,6 +84,12 @@ do
 命令
 done
 
+for循环
+for (( 初始值;循环控制条件;变量变化 )) 例：for (( i=1;i<="$a";i=i+1))
+do
+命令
+done
+
 $?
 用于获取上一个shell命令的退出状态码，或者是函数的返回值
 0表示成功，非0表示失败
@@ -395,7 +401,7 @@ case 变量名 in
 	...
 esac
 
-while 条件
+while [ 条件 ]
 do	
 	命令1
 	命令2
@@ -406,9 +412,10 @@ done
 
 while 条件;do 命令; done;
 
-
-
-
+util [ 条件 ]
+do
+命令
+done
 
 
 
