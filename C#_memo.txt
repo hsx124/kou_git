@@ -1,0 +1,395 @@
+单行注释//
+多行注释/**/
+
+文档注释///解释类和方法
+
+折叠冗余代码
+#region
+#endregion
+
+int,String,decimal,char
+
+String name = "tom";
+int age = 19;
+decimal sal = 1000.15M;
+Console.WriteLine("name={0},age={1},sal={2}", name, age, sal);
+
+Console.WriteLine("please input your favorite fruit:");
+String input = Console.ReadLine();
+if (input.Equals("apple")) {
+	Console.WriteLine("I like apple too");
+}
+else
+{
+	Console.WriteLine("apple ..");
+}
+@符号
+1.取消\在字符中的转义作用
+2.将字符串原样输出
+String path = @"C:\Users\shuxi\Desktop\demo.txt";
+System.IO.File.WriteAllText(path,"hello world...");
+
+String lineNumber = "123";
+Console.WriteLine(Convert.ToInt64(lineNumber));
+
+
+int line = 1;
+Console.WriteLine(line++);//1
+Console.WriteLine(++line);//3
+
+结构
+public struct Student {
+	public string name;
+	public int age;
+	public Double score;
+	public Char gender;
+}
+
+static void Main(string[] args)
+{
+	Student s ;
+	s.age = 19;
+	s.name = "Tom";
+	s.score = 99.5;
+	s.gender = '男';
+	Console.WriteLine(s);
+
+}
+
+方法
+高级参数ref,out,params
+out返回多个值
+static void Main(string[] args)
+{
+	int a;
+	Console.WriteLine(test(out a));//test
+	Console.WriteLine(a);// 45
+}
+public static string test(out int a) {
+	a = 45;
+	return "test";
+}
+ref相当引用传值
+将一个变量带入一个方法中进行改变后，再将改变后的值返回回去。
+static void Main(string[] args)
+{
+	double price = 129.0;
+	taxPrice(ref price);
+	Console.WriteLine(price);//141.9
+}
+
+public static void taxPrice(ref double price)
+{
+	price =price*(1+ 0.1);
+}
+
+params 可变参数
+static void Main(string[] args)
+{
+	sum(1, 2, 3, 4, 5);
+}
+
+public static void sum(params int[] score) {
+	int sum = 0;
+	for (int i = 0;i<score.Length;i++) {
+		sum += score[i];
+	}
+	Console.WriteLine(sum);
+}
+
+class
+class Person
+{
+	private string _name;
+	private int _age;
+	public string Name
+	{
+		set { this._name = value; }
+		get { return this._name; }
+	}
+
+	public int Age
+	{
+		set { this._age = value; }
+		get { return this._age; }
+	}
+	public void info()
+	{
+		Console.WriteLine("name = {0},age = {1}", this.Name, this.Age);
+	}
+}
+
+static void Main(string[] args)
+{
+	Person p = new Person();
+	p.Name = "Tom";
+	p.Age = 25;
+	p.info();
+}
+
+构造函数
+class Person
+{
+	private string _name;
+	private int _age;
+	public string Name
+	{
+		set { this._name = value; }
+		get { return this._name; }
+	}
+
+	public int Age
+	{
+		set { this._age = value; }
+		get { return this._age; }
+	}
+
+	public Person(string name,int age) {
+		this._name = name;
+		this._age = age;
+	}
+	public Person(string name):this(name, 15)
+	{
+		
+	}
+	public void info()
+	{
+		Console.WriteLine("name = {0},age = {1}", this._name, this._age);
+	}
+}
+
+析构函数
+当程序结束时执行析构函数，释放资源。
+~加类名
+~Person() {
+	Console.WriteLine("over..");
+}
+
+继承
+public class Student:Person
+{
+   public Student()
+	{
+		
+	} 
+
+	static void Main(string[] args)
+	{
+	   new Student().Info();
+	}
+}
+
+调用父类构造函数
+public class Student:Person
+{
+   public Student(string name,int age):base(name,age)
+	{
+		
+	} 
+}
+
+new
+隐藏从父类继承过来的成员
+is:表示类型转换 如果能够转换成功则返回True，失败则转换False
+as:表示类型转换 如果能够转换则返回对应的对象，否则返回null
+
+Path
+Path.GetFileName(path)　....
+
+File
+string content = "私は黄です。宜しくお願い致します。";
+byte[] buf = Encoding.Default.GetBytes(content);
+FileStream fs= File.Create(@"C:\Users\shuxi\Desktop\test.txt");
+fs.Write(buf);
+fs.Close();
+
+Dictionary<string, string> dic = new Dictionary<string, string>();
+dic.Add("key", "value");
+foreach (KeyValuePair<string,string> kv in dic)
+{
+	Console.WriteLine(kv.Key);
+	Console.WriteLine(kv.Value);
+}
+
+FileStream 操作字节
+StreamReader,StreamWriter 操作字符
+
+static void Main(string[] args)
+{
+	string path = @"C:\Users\shuxi\Desktop\Spring5_memo.txt";
+	FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
+	byte[] buf = new byte[1024];
+	int len = 0;
+	while ((len = fs.Read(buf,0,buf.Length)) != 0)
+	{
+
+		Console.WriteLine(Encoding.Default.GetString(buf,0,len));
+	}
+	fs.Close();
+	fs.Dispose();
+}
+
+using(){}自动释放资源
+static void Main(string[] args)
+{
+	string path = @"C:\Users\shuxi\Desktop\Spring5_memo.txt";
+	using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read))
+	{
+		byte[] buf = new byte[1024];
+		int len = 0;
+		while ((len = fs.Read(buf, 0, buf.Length)) != 0)
+		{
+
+			Console.WriteLine(Encoding.Default.GetString(buf, 0, len));
+		}
+	}
+}
+
+多态
+虚方法
+1.将父类的方法标记为虚方法，关键字virtual.被标记的函数可以被子类重写。
+2.子类的方法要标记override
+
+public class Person
+{
+
+	private string _name;
+	private int _age;
+	public string Name
+	{
+		set { this._name = value; }
+		get { return this._name; }
+	}
+
+	public int Age
+	{
+		set { this._age = value; }
+		get { return this._age; }
+	}
+
+	public Person(string name,int age)
+	{
+		this.Name = name;
+		this.Age = age;
+	}
+
+	
+	public virtual void Info()
+	{
+		Console.WriteLine("name = {0},age = {1}", this.Name, this.Age);
+	}
+}
+
+public class Student : Person
+{
+	public Student(string name, int age) : base(name, age)
+	{}
+	public override void Info()
+	{
+		Console.WriteLine("hello world..");
+	}
+	static void Main(string[] args)
+	{
+		Person student = new Student("student",19);
+		student.Info();
+	}
+}
+
+抽象类
+public abstract class Animal
+{
+  public  abstract void Dark();
+}
+
+public class Dog : Animal
+{
+	public override void Dark()
+	{
+		Console.WriteLine("dog dark ...");
+	}
+}
+
+访问修饰符
+public，private，protected
+internal：只能修饰类，只能在当前项目中访问，同一个项目中与public访问权限一样。
+
+序列化和反序化
+[Serializable]//标记该类可以被序列化
+public class Person
+{
+    private string _name;
+    public string Name
+    {
+        set { _name = value; }
+        get { return this._name; }
+    }
+}
+static void Main(string[] args)
+{
+	Person p = new Person();
+	p.Name = "this is serial person ..";
+	using (FileStream fs = new FileStream(@"C:\Users\shuxi\Desktop\serial_person.txt", FileMode.OpenOrCreate, FileAccess.Write))
+	{
+		BinaryFormatter bf = new BinaryFormatter();
+		bf.Serialize(fs,p);
+	}
+}
+
+static void Main(string[] args)
+{
+	Person p;
+	using (FileStream fs = new FileStream(@"C:\Users\shuxi\Desktop\serial_person.txt", FileMode.OpenOrCreate, FileAccess.Read)) {
+		BinaryFormatter bf = new BinaryFormatter();
+		p=(Person)bf.Deserialize(fs);
+		Console.WriteLine(p.Name);
+	}
+}
+
+
+部分类
+public partial class
+
+密封类
+public sealed class
+密封类不能被继承可以继承别人
+
+重写toString（）
+public class Person
+{
+    private string _name;
+    public string Name
+    {
+        set { _name = value; }
+        get { return this._name; }
+    }
+    public override string ToString()
+    {
+        return this.Name;
+    }
+}
+
+接口
+接口中的成员不允许添加访问修饰符，默认是public
+不允许写具有方法体的函数
+不能包含字段。。
+public interface IFlyable
+{
+    void fly();
+}
+
+class Person : IFlyable
+{
+    public void IFlyable.fly()
+    {
+        Console.WriteLine("i can fly ..");
+    }
+	public void fly()
+    {
+        Console.WriteLine("we can fly ..");
+    }
+}
+
+
+
+
+

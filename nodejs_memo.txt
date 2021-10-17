@@ -1,0 +1,82 @@
+运行node.js
+	node 文件.js
+
+加载模块
+	require	加载模块
+	const 变量=require('模块名')
+
+const fs = require('fs');
+let msg = "hello world...";
+fs.writeFile("./fs.txt",msg,function(err){
+	if(err){
+		console.log("error!!!")
+	}else{
+		console.log("ok..")
+	}
+})
+
+const fs = require('fs');
+fs.readFile("./fs.txt", function (err,data){
+	if (err){
+		console.log(err.code);
+		console.log("error!!!")
+	} else{
+	console.log(data.toString('UTF-8'))
+	console.log("ok..")
+	}
+})
+
+fs.mkdir()
+
+以下非全局变量，而是属于每个模块
+__dirname 当前正在执行的js文件所在目录
+__filename 当前正在执行的js文件的完整路径
+
+path模块
+const path = require('path');
+path.join()
+
+const http = require('http');
+var server=http.createServer()
+
+server.on('request',function(req,resp){
+	//plain 纯文本
+	req.url;//获取用户请求路径
+	console.log(req.headers);//请求报文头，键值对
+	console.log(req.rawHeaders);//请求报文头，数组
+	console.log(req.httpVersion);
+	console.log(req.method);
+	console.log(req.url);
+	resp.setHeader('Content-Type', 'text/html;charset=utf-8');
+    resp.write("helloworld........");
+    resp.end()
+});
+server.listen('80',function(){
+    console.log("http.......");
+})
+
+response
+res.statusCode
+res.statusMessage
+res.writeHead(statucode,statusMessage,header)
+
+
+
+
+
+
+
+2 12まで
+
+
+
+
+
+
+
+
+
+
+
+
+

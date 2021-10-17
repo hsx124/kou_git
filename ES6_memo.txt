@@ -1,0 +1,397 @@
+##let声明变量
+let a;
+let b,c,d;
+let e=100;
+let f=520,g="i love you",h=[];
+1.变量不能重复声明
+2.块级作用域
+{
+}
+if,while,for等语句
+3.不存在变量提升
+console.log(str);
+let str="hello world.."
+→报错
+
+4.不影响作用域链
+{
+	let pai=3.1415
+	function add(){
+		console.log(pai)
+	}
+	add()
+}
+→ OK
+
+##const声明常量
+const SEX="nan"
+1.声明一定要赋值
+2.一般用大写
+3.值不能修改
+4.块级作用域
+5.对数组和对象的元素修改，不算做对常量的修改，不会报错
+如：
+const TEAM=["USA","JAPAN"]
+TEAM.push("CHINA")
+→ OK
+
+##变量的解构赋值
+1.数组的解构
+	const COUNTRY =["china","japan","american","uk"]
+	let [c,j,a,u] =COUNTRY
+	console.log(c);
+	console.log(j);
+	console.log(a);
+	console.log(u);
+2.对象的解构
+	const person={
+           name:"Tom",
+           age:29,
+           sayHello:function(){
+               console.log("hello..");
+           }
+   }
+   let {name,age,sayHello}=person
+   console.log(name);
+   console.log(age);
+   sayHello()
+
+##模板字符串
+1.内容中可以出现换行符
+let str =`
+	<ul>
+		<li>sample</li>
+	</ul>
+	`
+2.变量拼接
+let name="Tom";
+let age=18;
+console.log(`my name is ${name},i am ${age} years old..`);
+
+##箭头函数
+1.this是静态的，始终指向函数声明时所在作用域下的this值
+2.不能作为构造函数实例化对象
+3.不能使用arguments变量
+
+##rest函数(代替arguments)
+function test(...args){
+  console.log(args);
+}
+test(1,2,4)
+
+##扩展运算符{...}
+1.能将数组转换为逗号分隔的参数序列
+let arr=[1,2,3,4]
+function demo(){
+	console.log(arguments);
+}
+demo(...arr)
+
+@应用场景
+数组的合并
+let arr=[1,2,3,4]
+let strs=["hello","world"]
+console.log(arr.concat(strs));
+console.log([...arr,...strs]);
+
+数组的克隆（浅拷贝）
+let arr=[1,2,3,4]
+console.log([...arr]);
+
+伪数组转为真数组
+
+##symbol
+原始数据类型，表示独一无二的值。是js的第七种数据类型，一种类似于字符串的数据类型
+symbol特点
+值是唯一的，用来解决命名冲突
+不能与其他数据进行运算
+定义的对象属性不能使用for..in来遍历，但可用Reflect.ownKeys来获取对象的所有键名
+//创建symbol
+let s = Symbol();
+console.log(s);
+let s1=Symbol("hello");
+let s2=Symbol("hello");
+console.log(s1===s2);//false
+console.log(s1);
+console.log(s2);
+
+let game ={
+   [Symbol("up")]:function(){
+	   console.log("up.....");
+   }
+}
+console.log(game[Reflect.ownKeys(game)[0]]());
+
+迭代器的应用
+let arr=["Tom","Jim","John","Smith"]
+// for (const ir of arr) {
+//     console.log(ir);
+// }
+let it =arr[Symbol.iterator]();
+console.log(it.next());
+console.log(it.next());
+console.log(it.next());
+console.log(it.next());
+console.log(it.next());
+{value: "Tom", done: false}
+{value: "Jim", done: false}
+{value: "John", done: false}
+{value: "Smith", done: false}
+{value: undefined, done: true}
+
+自定义迭代器
+let obj = {
+name: "country",
+member: ["china", "japan", "american", "austria"],
+[Symbol.iterator]() {
+  let index = 0;
+  let that = this;
+  return {
+	next: function () {
+	  const resultObj = {
+		value: undefined,
+		done: true,
+	  };
+	  if (index < that.member.length) {
+		const resultObj = { value: that.member[index], done: false };
+		index++;
+		return resultObj;
+	  } else {
+		return {
+		  value: undefined,
+		  done: true,
+		};
+	  }
+	},
+  };
+},
+};
+for (const it of obj) {
+	console.log(it);
+}
+
+##生成器
+一种特殊函数
+function与函数中间有*
+function* gen(){}
+function *gen(){}
+function * gen(){}
+function *gen(){
+	console.log("say hello");
+	yield "hello";
+	console.log("say world");
+	yield "world";
+	console.log("say ...");
+	yield "...."
+	console.log("the end ..");
+}
+let g = gen();
+//    console.log(g.next());
+//    console.log(g.next());
+//    console.log(g.next());
+for (const it of g) {
+	console.log(it);
+}
+传参
+function* gen(args) {
+	console.log(args);
+	let one = yield "hello";
+	console.log(one);
+	let two = yield "world";
+	console.log(two);
+	let three = yield "....";
+	console.log(three);
+}
+let g = gen("ddddd");
+console.log(g.next());
+console.log(g.next("AAAAAAA"));
+console.log(g.next("BBBBBBBBBBB"));
+
+应用场景
+function getUser() {
+	setTimeout(() => {
+	  let data = "user";
+	  it.next(data);
+	}, 1000);
+}
+function getOrder() {
+	setTimeout(() => {
+	  let data = "order";
+	  it.next(data);
+	}, 1000);
+}
+function getProduct() {
+	setTimeout(() => {
+	  let data = "product";
+	  it.next(data);
+	}, 1000);
+}
+
+function* gen() {
+	let user = yield getUser();
+	console.log(user);
+	let order = yield getOrder();
+	console.log(order);
+	let product = yield getProduct();
+	console.log(product);
+}
+
+let it = gen();
+it.next();
+
+##promise
+let pro = new Promise(function (resolve, reject) {
+        setTimeout(() => {
+          let data = "hello world...";
+          // resolve(data);
+          reject(data)
+        }, 1000);
+  });
+pro.then(
+function (val) {
+  console.log(val);
+},
+function (err) {
+  console.error(err);
+}
+);
+
+###set
+let set = new Set();
+console.log(set);
+let s  = new Set([12,3,45,4,6]);
+s.add("hello");
+s.add(45);
+s.delete("12")
+console.log(s.has("hello"));
+for (const it of s) {
+	console.log(it);
+}
+s.clear()
+console.log(s);
+
+##map
+let m = new Map();
+m.set("key","china");
+console.log(m.size);
+console.log(m.get("key"));
+
+##class
+class Person {
+	static school = "Tokyo unvercity"
+	static change(){
+		console.log("change..")
+	}
+	constructor(name, age) {
+	  this.name = name;
+	  this.age = age;
+	}
+	sayHello() {
+	  console.log("hello ...");
+	}
+}
+
+let p = new Person("tom", 18);
+p.sayHello()
+console.log(p);
+
+##数值扩展
+Number.EPSILON
+Number.isFinite
+Number.isNaN
+
+Obejct.is(比较值1，比较值2)
+console.log(Obejct.is(NaN,NaN))//true
+Object.assgin（被合并，合并） //对象合并
+
+##模块化
+export规定模块的对外接口
+import输入其他模块提供的功能
+
+分别暴露
+moduel.js
+export let demo = "this is a demo";
+export function test(){
+    console.log("hello test..");
+}
+
+统一暴露
+moduel.js
+let demo = "this is a demo";
+function test(){
+    console.log("hello test..");
+}
+export{demo,test}
+
+默认暴露
+export default {
+	name:"demo“，
+	school：function(){
+	}
+}
+import * as m from "./moduel.js"
+m.default.school()
+-------------------------------------
+<script type="module">
+	//通用导入
+  import * as m from "./moduel.js"
+	//解构赋值方式
+	//import{demo,test} from "./moduel.js"
+	//别名
+	//import{demo as d,test} from "./moduel.js"
+	
+	//import{default as dl} from "./moduel.js"
+	//3.简便方式针对默认暴露的引入
+	//import m from "./moduel.js"
+  console.log(m.demo);
+  console.log(m.test())
+</script>
+----------------------------
+app.js
+import * as m from "./moduel.js"
+console.log(m);
+
+module.js
+export let demo = "this is a demo";
+export function test(){
+    console.log("hello test..");
+}
+
+<script src="./app.js" type="module">
+      
+</script>
+
+ES7
+Array.prototype.includes
+<script>
+  let arr=[1,2,3,45,6,43]
+  console.log(arr.includes(45));
+</script>	
+
+9は観察中
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
