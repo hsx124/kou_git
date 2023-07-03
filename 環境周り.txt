@@ -16,3 +16,6 @@ myrecord
 id:ugw383004139
 
 $('#core-1').selectmenu("refresh)
+
+ http://19c5-240d-1a-664-4900-7800-cb31-7505-a22f.ngrok-free.app
+https://19c5-240d-1a-664-4900-7800-cb31-7505-a22f.ngrok-free.app
